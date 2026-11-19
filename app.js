@@ -26,7 +26,7 @@
             "sku"
         ],
         zoho_purchase: [
-            "bill_number",
+            "transaction_number",
             "transaction_date",
             "item.CF.Order No",
             "quantity_ordered",
@@ -424,6 +424,14 @@
             // 2. Try normalized match (ignoring whitespace, dots, underscores, symbols)
             if (foundIdx === -1) {
                 foundIdx = normHeaders.indexOf(targetNorm);
+            }
+
+            // 3. Fallback for common aliases (e.g., if looking for transaction_number, also accept bill_number or bill_no)
+            if (foundIdx === -1 && targetNorm === 'transactionnumber') {
+                foundIdx = normHeaders.indexOf('billnumber');
+                if (foundIdx === -1) foundIdx = normHeaders.indexOf('billno');
+                if (foundIdx === -1) foundIdx = normHeaders.indexOf('invoicenumber');
+                if (foundIdx === -1) foundIdx = normHeaders.indexOf('invoiceno');
             }
 
             mapping.push(foundIdx);

@@ -36,7 +36,7 @@
       `transaction_number`, `transaction_date`, `item.CF.Order No`, `quantity_ordered`, `bcy_item_price`, `sgst`, `cgst`, `igst`, `bcy_tax_amount`, `bcy_total_with_tax`, `sku`.
       Default filename: `Merged_Zoho_Sale_[timestamp].xlsx`.
     - **Purchase**: Zoho Purchase Bills. Automatically retains ONLY 10 specified columns and deletes all other columns:
-      `bill_number`, `transaction_date`, `item.CF.Order No`, `quantity_ordered`, `amount_without_tax`, `sgst`, `cgst`, `igst`, `bcy_total`, `sku`.
+      `transaction_number`, `transaction_date`, `item.CF.Order No`, `quantity_ordered`, `amount_without_tax`, `sgst`, `cgst`, `igst`, `bcy_total`, `sku`.
       Default filename: `Merged_Zoho_Purchase_[timestamp].xlsx`.
 - **Mode 3 - ERP Merge**:
   - Treats Row 1 as Table Headers.
