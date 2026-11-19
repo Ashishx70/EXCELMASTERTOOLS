@@ -38,7 +38,7 @@
     - **Purchase**: Zoho Purchase Bills. Automatically retains ONLY 10 specified columns and deletes all other columns:
       `transaction_number`, `transaction_date`, `item.CF.Order No`, `quantity_ordered`, `amount_without_tax`, `sgst`, `cgst`, `igst`, `bcy_total`, `sku`.
       Default filename: `Merged_Zoho_Purchase_[timestamp].xlsx`.
-      *(Zoho Purchase Auto-Shift: In Zoho Books Purchase exports, data for `item.CF.Order No` is automatically retrieved from its immediately adjacent right-side column and the extra column is eliminated).*
+      *(Zoho Purchase Custom Field Order Resolution: Supports custom field variants including `itern.CF.Order No`, `item.CF.Order No`, and `CF.Order No` with strict isolation from bill-level narration/notes columns, ensuring exact order IDs like TcnkjwQ4y are captured).*
 - **Mode 3 - ERP Merge**:
   - Treats Row 1 as Table Headers (with auto-detection if Row 1 has report title and headers are on Row 2).
   - Copies Data from Row 2 (or after detected headers) to the end of each sheet.

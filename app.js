@@ -408,7 +408,8 @@
         return String(str || '')
             .toLowerCase()
             .replace(/[\s_\.\-\#\(\)\[\]\/\:\;\\\'\"₹,]+/g, '')
-            .replace(/(inr|rs)$/i, '');
+            .replace(/(inr|rs)$/i, '')
+            .replace(/^itern/i, 'item');
     }
 
     // Comprehensive column aliases for ERP & Zoho fields
@@ -492,13 +493,15 @@
         transactiondate: [
             'transactiondate', 'postingdate', 'invoicedate', 'billdate', 'date'
         ],
-        // Order ID
+        // Order ID (for ERP)
         orderid: [
             'orderid', 'orderno', 'ordernumber', 'itemcforderno', 'pono', 'sono', 'purchaseorderno',
             'salesorderno', 'order'
         ],
+        // Custom Field Order No (for Zoho Purchase & Sale: item.CF.Order No / itern.CF.Order No)
         itemcforderno: [
-            'itemcforderno', 'orderid', 'orderno', 'ordernumber', 'pono', 'order'
+            'itemcforderno', 'iterncforderno', 'cforderno', 'cfordernumber',
+            'cforder', 'itemorderno', 'itemordernumber', 'iternorderno', 'iternordernumber'
         ],
         // Quantity
         stockqty: [
@@ -614,26 +617,42 @@
                 }
             }
 
-            // 5. Intelligent Fallback for Order ID, Invoice/Bill, Item Code if still not found
+            // 5. Intelligent Fallback for Custom Field Order No, Order ID, Invoice/Bill, Item Code if still not found
             if (foundIdx === -1) {
-                const isOrder = targetNorm.includes('order');
+                const isCustomOrder = targetNorm.includes('cf') && targetNorm.includes('order');
+                const isOrder = targetNorm.includes('order') && !isCustomOrder;
                 const isInv = targetNorm === 'invoice' || targetNorm === 'billno' || targetNorm === 'transactionnumber';
                 const isItem = targetNorm === 'itemcode' || targetNorm === 'sku';
 
-                for (let i = 0; i < normHeaders.length; i++) {
-                    if (usedIndices.has(i)) continue;
-                    const h = normHeaders[i];
-                    if (!h) continue;
+                // Prioritize Custom Field Order No: match ANY header containing BOTH 'cf' and 'order'
+                if (isCustomOrder) {
+                    for (let i = 0; i < normHeaders.length; i++) {
+                        if (usedIndices.has(i)) continue;
+                        const h = normHeaders[i];
+                        if (!h) continue;
+                        if (h.includes('cf') && h.includes('order')) {
+                            foundIdx = i;
+                            break;
+                        }
+                    }
+                }
 
-                    if (isOrder && (h.includes('orderno') || h.includes('orderid') || h.includes('order') || h.includes('sono') || h.includes('pono'))) {
-                        foundIdx = i;
-                        break;
-                    } else if (isInv && (h.includes('invoice') || h.includes('bill') || h.includes('voucher') || h.includes('trans'))) {
-                        foundIdx = i;
-                        break;
-                    } else if (isItem && (h.includes('sku') || h.includes('itemcode') || (h.includes('item') && !h.includes('price')))) {
-                        foundIdx = i;
-                        break;
+                if (foundIdx === -1) {
+                    for (let i = 0; i < normHeaders.length; i++) {
+                        if (usedIndices.has(i)) continue;
+                        const h = normHeaders[i];
+                        if (!h) continue;
+
+                        if (isOrder && (h.includes('orderno') || h.includes('orderid') || h.includes('order') || h.includes('sono') || h.includes('pono'))) {
+                            foundIdx = i;
+                            break;
+                        } else if (isInv && (h.includes('invoice') || h.includes('bill') || h.includes('voucher') || h.includes('trans'))) {
+                            foundIdx = i;
+                            break;
+                        } else if (isItem && (h.includes('sku') || h.includes('itemcode') || (h.includes('item') && !h.includes('price')))) {
+                            foundIdx = i;
+                            break;
+                        }
                     }
                 }
             }
@@ -1348,9 +1367,10 @@
                             fileDataStart = 2; // Row 3 (0-based index 2)
                         }
                         fileHeaderRow = headerRowIndex;
-                    } else if (state.mode === 'erp') {
-                        // Intelligent ERP Header Detection: Some ERP files have report titles in Row 0 and column headers in Row 1 or 2
-                        let bestRowIdx = 0;
+                    } else if (state.mode === 'erp' || state.mode === 'zoho') {
+                        // Intelligent Header Detection for ERP & Zoho:
+                        // Accurately finds the row containing actual column headers (Row 1, 2, or 3)
+                        let bestRowIdx = state.mode === 'zoho' ? 1 : 0;
                         let bestScore = -1;
                         for (let r = 0; r < Math.min(3, rows.length); r++) {
                             const rowCells = rows[r] || [];
@@ -1406,20 +1426,20 @@
 
                                         let val = (srcIdx >= 0 && row[srcIdx] !== undefined && row[srcIdx] !== null) ? row[srcIdx] : '';
 
-                                        // Zoho Purchase Bug Fix: 'item.CF.Order No' column is empty in Zoho export,
-                                        // but its actual data sits in the immediately adjacent right-side column (srcIdx + 1).
-                                        // We pull the data from the right column into 'item.CF.Order No', and drop the extra column.
+                                        // Zoho Custom Field Order No ('item.CF.Order No' / 'itern.CF.Order No'):
+                                        // Directly takes the value from the matched custom field column (e.g. column BG).
+                                        // Only if the cell in that row is empty/blank, and the adjacent column is an unmapped extra column,
+                                        // fall back to it (never overwrites valid values).
                                         if (targetNorm === 'itemcforderno' && srcIdx >= 0 && (srcIdx + 1) < row.length) {
                                             const valStr = String(val).trim();
-                                            const rightVal = row[srcIdx + 1];
-                                            const rightStr = (rightVal !== undefined && rightVal !== null) ? String(rightVal).trim() : '';
-
                                             if (valStr === '' || valStr.toLowerCase() === 'null' || valStr.toLowerCase() === 'undefined' || valStr === '-') {
-                                                if (rightStr !== '') {
-                                                    val = rightVal;
+                                                if (!colMapping.includes(srcIdx + 1)) {
+                                                    const rightVal = row[srcIdx + 1];
+                                                    const rightStr = (rightVal !== undefined && rightVal !== null) ? String(rightVal).trim() : '';
+                                                    if (rightStr !== '') {
+                                                        val = rightVal;
+                                                    }
                                                 }
-                                            } else if (state.mode === 'zoho' && state.zohoPart === 'purchase' && rightStr !== '') {
-                                                val = rightVal;
                                             }
                                         }
 
