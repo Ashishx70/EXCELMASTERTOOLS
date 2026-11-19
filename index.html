@@ -243,54 +243,138 @@
                 </div>
 
                 <!-- Zoho Sub-Options Panel (Normal, Sale, Purchase) -->
-                <div class="zoho-sub-panel plain-sub-panel" id="zoho-sub-panel" style="display: none;">
-                    <div class="plain-sub-container">
-                        <div class="plain-sub-label-group">
-                            <svg class="plain-sub-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                <line x1="8" y1="21" x2="16" y2="21"></line>
-                                <line x1="12" y1="17" x2="12" y2="21"></line>
-                            </svg>
-                            <span class="plain-sub-label">Zoho Sub-Type:</span>
+                <div class="zoho-sub-panel sub-options-strip" id="zoho-sub-panel" style="display: none;">
+                    <div class="sub-strip-header">
+                        <div class="sub-strip-title">
+                            <div class="sub-strip-icon-box zoho-theme-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="sub-strip-heading">Zoho Books Category</span>
+                                <span class="sub-strip-caption">Select report type to merge</span>
+                            </div>
                         </div>
-                        <div class="plain-sub-buttons">
-                            <button type="button" class="zoho-part-card plain-part-btn active" id="btn-zoho-part-normal" data-zoho-part="normal">
-                                Normal
-                            </button>
-                            <button type="button" class="zoho-part-card plain-part-btn" id="btn-zoho-part-sale" data-zoho-part="sale">
-                                Sale
-                            </button>
-                            <button type="button" class="zoho-part-card plain-part-btn" id="btn-zoho-part-purchase" data-zoho-part="purchase">
-                                Purchase
-                            </button>
-                        </div>
-                        <div class="plain-sub-badge zoho-badge-accent" id="zoho-active-badge">Normal Selected</div>
+                        <div class="sub-strip-badge zoho-badge" id="zoho-active-badge">Normal Selected</div>
+                    </div>
+
+                    <div class="sub-strip-buttons">
+                        <!-- Normal Button -->
+                        <button type="button" class="zoho-part-card strip-btn active" id="btn-zoho-part-normal" data-zoho-part="normal">
+                            <div class="strip-btn-icon-wrap icon-normal">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                </svg>
+                            </div>
+                            <div class="strip-btn-text">
+                                <span class="strip-btn-title">Normal</span>
+                                <span class="strip-btn-tag">All Columns</span>
+                            </div>
+                        </button>
+
+                        <!-- Sale Button -->
+                        <button type="button" class="zoho-part-card strip-btn" id="btn-zoho-part-sale" data-zoho-part="sale">
+                            <div class="strip-btn-icon-wrap icon-sale">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="8" cy="21" r="1"></circle>
+                                    <circle cx="19" cy="21" r="1"></circle>
+                                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                                </svg>
+                            </div>
+                            <div class="strip-btn-text">
+                                <span class="strip-btn-title">Sale</span>
+                                <span class="strip-btn-tag tag-sale">11 Columns</span>
+                            </div>
+                        </button>
+
+                        <!-- Purchase Button -->
+                        <button type="button" class="zoho-part-card strip-btn" id="btn-zoho-part-purchase" data-zoho-part="purchase">
+                            <div class="strip-btn-icon-wrap icon-purchase">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                </svg>
+                            </div>
+                            <div class="strip-btn-text">
+                                <span class="strip-btn-title">Purchase</span>
+                                <span class="strip-btn-tag tag-purchase">10 Columns</span>
+                            </div>
+                        </button>
                     </div>
                 </div>
 
                 <!-- ERP Sub-Options Panel (Normal, Sale, Purchase) -->
-                <div class="erp-sub-panel plain-sub-panel" id="erp-sub-panel" style="display: none;">
-                    <div class="plain-sub-container">
-                        <div class="plain-sub-label-group">
-                            <svg class="plain-sub-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                            </svg>
-                            <span class="plain-sub-label">ERP Sub-Type:</span>
+                <div class="erp-sub-panel sub-options-strip" id="erp-sub-panel" style="display: none;">
+                    <div class="sub-strip-header">
+                        <div class="sub-strip-title">
+                            <div class="sub-strip-icon-box erp-theme-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="sub-strip-heading">ERP Reports Category</span>
+                                <span class="sub-strip-caption">Select report type to merge</span>
+                            </div>
                         </div>
-                        <div class="plain-sub-buttons">
-                            <button type="button" class="erp-part-card plain-part-btn active" id="btn-erp-part-normal" data-erp-part="normal">
-                                Normal
-                            </button>
-                            <button type="button" class="erp-part-card plain-part-btn" id="btn-erp-part-sale" data-erp-part="sale">
-                                Sale
-                            </button>
-                            <button type="button" class="erp-part-card plain-part-btn" id="btn-erp-part-purchase" data-erp-part="purchase">
-                                Purchase
-                            </button>
-                        </div>
-                        <div class="plain-sub-badge erp-badge-accent" id="erp-active-badge">Normal Selected</div>
+                        <div class="sub-strip-badge erp-badge" id="erp-active-badge">Normal Selected</div>
+                    </div>
+
+                    <div class="sub-strip-buttons">
+                        <!-- Normal Button -->
+                        <button type="button" class="erp-part-card strip-btn active" id="btn-erp-part-normal" data-erp-part="normal">
+                            <div class="strip-btn-icon-wrap icon-normal">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                </svg>
+                            </div>
+                            <div class="strip-btn-text">
+                                <span class="strip-btn-title">Normal</span>
+                                <span class="strip-btn-tag">All Columns</span>
+                            </div>
+                        </button>
+
+                        <!-- Sale Button -->
+                        <button type="button" class="erp-part-card strip-btn" id="btn-erp-part-sale" data-erp-part="sale">
+                            <div class="strip-btn-icon-wrap icon-sale">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="8" cy="21" r="1"></circle>
+                                    <circle cx="19" cy="21" r="1"></circle>
+                                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                                </svg>
+                            </div>
+                            <div class="strip-btn-text">
+                                <span class="strip-btn-title">Sale</span>
+                                <span class="strip-btn-tag tag-sale">11 Columns</span>
+                            </div>
+                        </button>
+
+                        <!-- Purchase Button -->
+                        <button type="button" class="erp-part-card strip-btn" id="btn-erp-part-purchase" data-erp-part="purchase">
+                            <div class="strip-btn-icon-wrap icon-purchase">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                </svg>
+                            </div>
+                            <div class="strip-btn-text">
+                                <span class="strip-btn-title">Purchase</span>
+                                <span class="strip-btn-tag tag-purchase">11 Columns</span>
+                            </div>
+                        </button>
                     </div>
                 </div>
 
