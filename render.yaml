@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: master-excel-tools
+    runtime: python
+    buildCommand: "python3 -m pip install -r requirements.txt"
+    startCommand: "python3 server.py"
+    envVars:
+      - key: PORT
+        value: 10000

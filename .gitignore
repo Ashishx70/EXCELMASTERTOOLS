@@ -1,0 +1,15 @@
+# System and Temporary Files
+~$*
+.DS_Store
+Thumbs.db
+
+# Logs and scratch
+*.log
+bench_out.csv
+*.csv
+scratch/
+__pycache__/
+*.pyc
+
+# Local environment
+.env

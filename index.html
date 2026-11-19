@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASTER EXCEL TOOLS | Enterprise Excel, CSV &amp; Zoho Books Platform</title>
+    <!-- Microsoft Excel Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M28 6H39a3 3 0 0 1 3 3v30a3 3 0 0 1-3 3H28V6z' fill='%23107C41'/%3E%3Cpath d='M32 15h6v3h-6v-3zm0 7h6v3h-6v-3zm0 7h6v3h-6v-3z' fill='%23FFFFFF' fill-opacity='0.85'/%3E%3Cpath d='M6 10a4 4 0 0 1 4-4h18v36H10a4 4 0 0 1-4-4V10z' fill='%23185C37'/%3E%3Cpath d='M12.5 16h4.2l2.3 4.2 2.3-4.2h4.2l-4.5 6.5 4.8 6.5h-4.2l-2.6-4.5-2.6 4.5h-4.2l4.8-6.5-4.5-6.5z' fill='%23FFFFFF'/%3E%3C/svg%3E">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- SheetJS Library for Client-Side Excel/CSV Processing -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- JSZip Library for Client-Side ZIP Archive Extraction & Creation -->
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <link rel="stylesheet" href="styles.css?v=20261118_2225">
+</head>
+<body class="light-theme">
+    <div class="app-wrapper">
+        <!-- Top Navigation Bar -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <div class="brand-logo" title="Microsoft Excel Tools">
+                    <svg class="excel-brand-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M28 6H39a3 3 0 0 1 3 3v30a3 3 0 0 1-3 3H28V6z" fill="#107C41"/>
+                        <path d="M32 15h6v3h-6v-3zm0 7h6v3h-6v-3zm0 7h6v3h-6v-3z" fill="#FFFFFF" fill-opacity="0.85"/>
+                        <path d="M6 10a4 4 0 0 1 4-4h18v36H10a4 4 0 0 1-4-4V10z" fill="#185C37"/>
+                        <path d="M12.5 16h4.2l2.3 4.2 2.3-4.2h4.2l-4.5 6.5 4.8 6.5h-4.2l-2.6-4.5-2.6 4.5h-4.2l4.8-6.5-4.5-6.5z" fill="#FFFFFF"/>
+                    </svg>
+                </div>
+                <div class="brand-details">
+                    <div class="brand-title-wrap">
+                        <span class="brand-title">MASTER EXCEL TOOLS</span>
+                        <span class="brand-badge">Enterprise Pro</span>
+                    </div>
+                    <span class="brand-subtitle">High-speed, browser-based Excel & Zoho Books batch merger</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="privacy-badge">
+                    <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>100% Client-Side Privacy (Zero Server Upload)</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Mode Selection Section -->
+            <section class="section-card mode-section">
+                <div class="section-header">
+                    <div class="section-title-wrap">
+                        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        <div>
+                            <h2 class="section-heading">Select Merge Workflow</h2>
+                            <p class="section-desc">Choose the formatting logic that matches your source files</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mode-grid">
+                    <!-- Option 1: Standard Excel & CSV -->
+                    <label class="mode-card active" id="card-mode-standard">
+                        <input type="radio" name="mergeMode" value="standard" checked>
+                        <div class="mode-card-header">
+                            <div class="mode-icon-box">
+                                <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <path d="m3 15 2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <span class="mode-pill">Module 1 & 2</span>
+                        </div>
+                        <h3 class="mode-title">Standard Excel & CSV</h3>
+                        <p class="mode-detail">
+                            Normal workbooks (.xlsx, .xls, .csv).
+                            <strong>Row 1</strong> is header, data begins from <strong>Row 2</strong>.
+                        </p>
+                        <div class="mode-meta">
+                            <span>Header: Row 1</span>
+                            <span class="dot-separator">•</span>
+                            <span>Data: Row 2+</span>
+                        </div>
+                    </label>
+
+                    <!-- Option 2: Zoho Books Export -->
+                    <label class="mode-card" id="card-mode-zoho">
+                        <input type="radio" name="mergeMode" value="zoho">
+                        <div class="mode-card-header">
+                            <div class="mode-icon-box">
+                                <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            </div>
+                            <span class="mode-pill zoho-pill">Module 3 (Zoho)</span>
+                        </div>
+                        <h3 class="mode-title">Zoho Books Exports</h3>
+                        <p class="mode-detail">
+                            Tuned for Zoho Books reports. Skips Row 1 title, picks <strong>Row 2</strong> as header, and data from <strong>Row 3</strong>.
+                        </p>
+                        <div class="mode-meta">
+                            <span>Header: Row 2</span>
+                            <span class="dot-separator">•</span>
+                            <span>Data: Row 3+</span>
+                            <span class="dot-separator">•</span>
+                            <span class="zoho-subtag-pill" id="zoho-card-subtag">Normal</span>
+                        </div>
+                    </label>
+
+                    <!-- Option: ERP Merge -->
+                    <label class="mode-card" id="card-mode-erp">
+                        <input type="radio" name="mergeMode" value="erp">
+                        <div class="mode-card-header">
+                            <div class="mode-icon-box erp-icon-box">
+                                <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                </svg>
+                            </div>
+                            <span class="mode-pill erp-pill">ERP Reports</span>
+                        </div>
+                        <h3 class="mode-title">ERP Merge</h3>
+                        <p class="mode-detail">
+                            For ERP exported workbooks (.xlsx, .xls, .csv).
+                            <strong>Row 1</strong> is header, data begins from <strong>Row 2</strong>.
+                        </p>
+                        <div class="mode-meta">
+                            <span>Header: Row 1</span>
+                            <span class="dot-separator">•</span>
+                            <span>Data: Row 2+</span>
+                            <span class="dot-separator">•</span>
+                            <span class="erp-subtag-pill" id="erp-card-subtag">Normal</span>
+                        </div>
+                    </label>
+
+                    <!-- Option 3: Account Center (New) -->
+                    <label class="mode-card" id="card-mode-account-center">
+                        <input type="radio" name="mergeMode" value="account_center">
+                        <div class="mode-card-header">
+                            <div class="mode-icon-box">
+                                <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <span class="mode-pill account-pill">Account Center</span>
+                        </div>
+                        <h3 class="mode-title">Account Center</h3>
+                        <p class="mode-detail">
+                            Extracts from <strong>Row 2</strong> in the first file (Header &amp; Data), and merges from <strong>Row 3</strong> onwards for all remaining files.
+                        </p>
+                        <div class="mode-meta">
+                            <span>1st File: Row 2</span>
+                            <span class="dot-separator">•</span>
+                            <span>Other Files: Row 3+</span>
+                        </div>
+                    </label>
+
+                    <!-- Option 4: ZIP to Single ZIP Consolidator (New) -->
+                    <label class="mode-card" id="card-mode-zip-consolidator">
+                        <input type="radio" name="mergeMode" value="zip_consolidator">
+                        <div class="mode-card-header">
+                            <div class="mode-icon-box">
+                                <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                </svg>
+                            </div>
+                            <span class="mode-pill zip-pill">ZIP Extractor</span>
+                        </div>
+                        <h3 class="mode-title">ZIP Consolidator</h3>
+                        <p class="mode-detail">
+                            Upload multiple ZIP files. Extracts all Excel &amp; CSV files inside them and bundles them into <strong>1 single clean ZIP</strong> file.
+                        </p>
+                        <div class="mode-meta">
+                            <span>Input: Multiple .zip</span>
+                            <span class="dot-separator">•</span>
+                            <span>Output: 1 Combined .zip</span>
+                        </div>
+                    </label>
+
+                    <!-- Option 5: Custom Configuration -->
+                    <label class="mode-card" id="card-mode-custom">
+                        <input type="radio" name="mergeMode" value="custom">
+                        <div class="mode-card-header">
+                            <div class="mode-icon-box">
+                                <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </div>
+                            <span class="mode-pill custom-pill">Advanced</span>
+                        </div>
+                        <h3 class="mode-title">Custom Header / Data Rows</h3>
+                        <p class="mode-detail">
+                            Define exact row numbers for non-standard formats or custom ERP reports.
+                        </p>
+                        <div class="mode-meta">
+                            <span>Flexible Configuration</span>
+                        </div>
+                    </label>
+
+                    <!-- Option 6: GST Register Cleaner (Zero-RAM Engine) -->
+                    <label class="mode-card" id="card-mode-cleaner">
+                        <input type="radio" name="mergeMode" value="cleaner">
+                        <div class="mode-card-header">
+                            <div class="mode-icon-box cleaner-icon-box">
+                                <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                    <path d="m9 12 2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <span class="mode-pill cleaner-pill">Zero-RAM Engine</span>
+                        </div>
+                        <h3 class="mode-title">GST Register Cleaner</h3>
+                        <p class="mode-detail">
+                            Clean massive 126MB+ ERP &amp; Zoho registers. Drops unauthorized series, keeps authorized marketplace vouchers.
+                        </p>
+                        <div class="mode-meta">
+                            <span>Peak RAM: &lt; 35 MB Safe</span>
+                            <span class="dot-separator">•</span>
+                            <span>Sales / Pur / CN / DN</span>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Zoho Sub-Options Panel (Normal, Sale, Purchase) -->
+                <div class="zoho-sub-panel" id="zoho-sub-panel" style="display: none;">
+                    <div class="zoho-sub-header">
+                        <div class="zoho-sub-title-group">
+                            <div class="zoho-sub-icon-wrap">
+                                <svg class="zoho-sub-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="zoho-sub-heading">Zoho Books Report Category</h4>
+                                <p class="zoho-sub-subheading">Choose report sub-type: Normal, Sale, or Purchase</p>
+                            </div>
+                        </div>
+                        <div class="zoho-sub-badge" id="zoho-active-badge">Normal Selected</div>
+                    </div>
+                    <div class="zoho-parts-grid">
+                        <button type="button" class="zoho-part-card active" id="btn-zoho-part-normal" data-zoho-part="normal">
+                            <div class="part-indicator"></div>
+                            <div class="part-icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                </svg>
+                            </div>
+                            <div class="part-content">
+                                <div class="part-title">Normal</div>
+                                <div class="part-desc">Standard Zoho Reports • Merges files without deleting any columns</div>
+                            </div>
+                            <span class="part-pill">Row 2 Header • All Columns Retained</span>
+                        </button>
+
+                        <button type="button" class="zoho-part-card" id="btn-zoho-part-sale" data-zoho-part="sale">
+                            <div class="part-indicator"></div>
+                            <div class="part-icon-box part-sale-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="8" cy="21" r="1"></circle>
+                                    <circle cx="19" cy="21" r="1"></circle>
+                                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                                </svg>
+                            </div>
+                            <div class="part-content">
+                                <div class="part-title">Sale</div>
+                                <div class="part-desc">Zoho Sales Invoices • Retains 11 columns (transaction_number, bcy_total, etc.)</div>
+                            </div>
+                            <span class="part-pill pill-filtered">11 Columns Retained • Others Deleted</span>
+                        </button>
+
+                        <button type="button" class="zoho-part-card" id="btn-zoho-part-purchase" data-zoho-part="purchase">
+                            <div class="part-indicator"></div>
+                            <div class="part-icon-box part-pur-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                </svg>
+                            </div>
+                            <div class="part-content">
+                                <div class="part-title">Purchase</div>
+                                <div class="part-desc">Zoho Purchase Bills • Retains 10 columns (bill_number, amount_without_tax, etc.)</div>
+                            </div>
+                            <span class="part-pill pill-filtered">10 Columns Retained • Others Deleted</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ERP Sub-Options Panel (Normal, Sale, Purchase) -->
+                <div class="erp-sub-panel" id="erp-sub-panel" style="display: none;">
+                    <div class="erp-sub-header">
+                        <div class="erp-sub-title-group">
+                            <div class="erp-sub-icon-wrap">
+                                <svg class="erp-sub-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="erp-sub-heading">ERP Reports Category</h4>
+                                <p class="erp-sub-subheading">Choose ERP sub-type: Normal, Sale, or Purchase</p>
+                            </div>
+                        </div>
+                        <div class="erp-sub-badge" id="erp-active-badge">Normal Selected</div>
+                    </div>
+                    <div class="erp-parts-grid">
+                        <button type="button" class="erp-part-card active" id="btn-erp-part-normal" data-erp-part="normal">
+                            <div class="part-indicator"></div>
+                            <div class="part-icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                </svg>
+                            </div>
+                            <div class="part-content">
+                                <div class="part-title">Normal</div>
+                                <div class="part-desc">Standard ERP Merge • Copies all data without deleting any columns</div>
+                            </div>
+                            <span class="part-pill">Row 1 Header • All Columns Retained</span>
+                        </button>
+
+                        <button type="button" class="erp-part-card" id="btn-erp-part-sale" data-erp-part="sale">
+                            <div class="part-indicator"></div>
+                            <div class="part-icon-box part-sale-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="8" cy="21" r="1"></circle>
+                                    <circle cx="19" cy="21" r="1"></circle>
+                                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                                </svg>
+                            </div>
+                            <div class="part-content">
+                                <div class="part-title">Sale</div>
+                                <div class="part-desc">ERP Sales Invoices • Retains 11 columns (Invoice, Posting Date, Order ID, etc.)</div>
+                            </div>
+                            <span class="part-pill pill-filtered">11 Columns Retained • Others Deleted</span>
+                        </button>
+
+                        <button type="button" class="erp-part-card" id="btn-erp-part-purchase" data-erp-part="purchase">
+                            <div class="part-indicator"></div>
+                            <div class="part-icon-box part-pur-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                </svg>
+                            </div>
+                            <div class="part-content">
+                                <div class="part-title">Purchase</div>
+                                <div class="part-desc">ERP Purchase Bills • Retains 11 columns (Bill No, Posting Date, Order ID, etc.)</div>
+                            </div>
+                            <span class="part-pill pill-filtered">11 Columns Retained • Others Deleted</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Custom Parameters Collapse -->
+                <div class="custom-settings-panel" id="custom-settings" style="display: none;">
+                    <div class="custom-grid">
+                        <div class="form-group">
+                            <label for="custom-header-row">Header Row Number</label>
+                            <input type="number" id="custom-header-row" class="form-input" value="1" min="1" max="100">
+                            <span class="input-hint">Row that contains table column names</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="custom-data-row">Data Start Row Number</label>
+                            <input type="number" id="custom-data-row" class="form-input" value="2" min="1" max="100">
+                            <span class="input-hint">First row containing actual transactional data</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="custom-sheet-index">Target Sheet Index</label>
+                            <input type="number" id="custom-sheet-index" class="form-input" value="1" min="1" max="50">
+                            <span class="input-hint">1 for first worksheet</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================================= -->
+            <!-- DEDICATED GST REGISTER CLEANER WORKSPACE (Module 6)                       -->
+            <!-- ========================================================================= -->
+            <section class="section-card cleaner-workspace-section" id="cleaner-workspace" style="display: none;">
+                <!-- Top Sub-Tabs Navigation -->
+                <div class="cleaner-tabs-nav">
+                    <button type="button" class="cleaner-tab-btn active" data-clean-tab="tab-sale-purchase">
+                        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="21" r="1"></circle>
+                            <circle cx="19" cy="21" r="1"></circle>
+                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                        </svg>
+                        <span>Sale &amp; Purchase Registers (4 Files)</span>
+                    </button>
+                    <button type="button" class="cleaner-tab-btn" data-clean-tab="tab-credit-notes">
+                        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                        </svg>
+                        <span>Credit Notes (2 Files)</span>
+                    </button>
+                    <button type="button" class="cleaner-tab-btn" data-clean-tab="tab-debit-notes">
+                        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                        </svg>
+                        <span>Debit Notes (2 Files)</span>
+                    </button>
+                </div>
+
+                <!-- SUB-TAB 1: SALE & PURCHASE REGISTERS (4 FILES) -->
+                <div class="cleaner-tab-content active" id="tab-sale-purchase">
+                    <!-- Rule Card -->
+                    <div class="filter-rules-banner">
+                        <div class="rules-banner-header">
+                            <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <span class="rules-banner-title">Automated Sale &amp; Purchase Filter Validation Rules</span>
+                        </div>
+                        <div class="rules-columns-grid">
+                            <!-- Left: Sale Registers -->
+                            <div class="rules-subcard">
+                                <div class="rules-subcard-title">
+                                    <span class="subcard-dot dot-sale"></span>
+                                    <h4>Sale Registers (ERP &amp; Zoho Sale)</h4>
+                                </div>
+                                <div class="rules-chips-wrap">
+                                    <span class="rules-chip-label">Retains:</span>
+                                    <div class="chips-list">
+                                        <span class="rule-chip chip-sale">AJ27S</span>
+                                        <span class="rule-chip chip-sale">MY27S</span>
+                                        <span class="rule-chip chip-sale">FK27S</span>
+                                        <span class="rule-chip chip-sale">CB27S</span>
+                                        <span class="rule-chip chip-sale">KT27S</span>
+                                        <span class="rule-chip chip-sale">RZ27S</span>
+                                        <span class="rule-chip chip-sale">ET27S</span>
+                                        <span class="rule-chip chip-sale">KK27S</span>
+                                        <span class="rule-chip chip-sale">CGJ12627</span>
+                                        <span class="chip-suffix">followed directly by numeric or J / Y sub-variants.</span>
+                                    </div>
+                                </div>
+                                <div class="rule-alert-box alert-danger">
+                                    <svg class="alert-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    <span>Automatically deletes: CN (Credit Notes), DN, and Returns (R / SR) rows.</span>
+                                </div>
+                            </div>
+
+                            <!-- Right: Purchase Registers -->
+                            <div class="rules-subcard">
+                                <div class="rules-subcard-title">
+                                    <span class="subcard-dot dot-purchase"></span>
+                                    <h4>Purchase Registers (ERP &amp; Zoho Pur)</h4>
+                                </div>
+                                <div class="rules-chips-wrap">
+                                    <span class="rules-chip-label">Retains:</span>
+                                    <div class="chips-list">
+                                        <span class="rule-chip chip-pur">AJ27P</span>
+                                        <span class="rule-chip chip-pur">MY27P</span>
+                                        <span class="rule-chip chip-pur">FK27P</span>
+                                        <span class="rule-chip chip-pur">CB27P</span>
+                                        <span class="rule-chip chip-pur">KT27P</span>
+                                        <span class="rule-chip chip-pur">RZ27P</span>
+                                        <span class="rule-chip chip-pur">ET27P</span>
+                                        <span class="rule-chip chip-pur">KK27P</span>
+                                        <span class="rule-chip chip-pur">PGJ12627</span>
+                                        <span class="chip-suffix">followed directly by numeric or J / Y sub-variants.</span>
+                                    </div>
+                                </div>
+                                <div class="rule-alert-box alert-danger">
+                                    <svg class="alert-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    <span>Automatically deletes: PDN, DN (Debit Notes), and Returns (PR / SR) rows.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sale & Purchase Sub-Navigation: Summary vs Details -->
+                    <div class="sale-pur-subtabs-nav">
+                        <button type="button" class="sale-pur-subtab-btn active" data-subtab="summary">
+                            <svg class="subtab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <span>Summary Registers (4 Files)</span>
+                            <span class="subtab-count-badge" id="badge-summary-count" style="display: none;">0</span>
+                        </button>
+                        <button type="button" class="sale-pur-subtab-btn" data-subtab="details">
+                            <svg class="subtab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                            <span>Details Registers (4 Files)</span>
+                            <span class="subtab-count-badge" id="badge-details-count" style="display: none;">0</span>
+                        </button>
+                        <button type="button" class="sale-pur-subtab-btn" data-subtab="all">
+                            <svg class="subtab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            <span>All Registers (8 Files)</span>
+                        </button>
+                    </div>
+
+                    <!-- PART 1: SUMMARY REGISTERS -->
+                    <div class="sale-pur-subtab-pane" id="pane-sale-pur-summary">
+                        <div class="sale-pur-pane-header">
+                            <div class="pane-title-wrap">
+                                <div class="pane-title-with-pill">
+                                    <h3 class="pane-heading">Sales &amp; Purchase Summary Registers</h3>
+                                    <span class="pane-badge badge-summary-pill">Part 1 &bull; Summary</span>
+                                </div>
+                                <p class="pane-subtitle">Clean summary-level files (1 row per invoice/bill voucher). Excludes returns &amp; unauthorized series.</p>
+                            </div>
+                        </div>
+
+                        <!-- 4 Upload Slot Cards (2x2 Grid) -->
+                        <div class="slots-grid">
+                            <!-- Slot S3: ERP Sales Register (Summary) -->
+                            <div class="register-slot-card" id="slot-card-s3" data-slot="s3" data-regtype="sale_erp">
+                                <input type="file" class="slot-file-input" id="input-slot-s3" accept=".xlsx,.xls,.csv" style="display: none;">
+                                <div class="slot-left-badge badge-s3">S3</div>
+                                <div class="slot-info">
+                                    <div class="slot-title-wrap">
+                                        <h4 class="slot-title">ERP Sales Register (Summary)</h4>
+                                        <span class="slot-source-pill pill-s3">S3 Summary</span>
+                                    </div>
+                                    <p class="slot-subtitle">Click to select raw ERP sales summary register (.xlsx / .xls / .csv)</p>
+                                    <span class="slot-hint">Target Voucher Column &bull; Keep AJ27S, MY27S, etc.</span>
+                                    <div class="slot-file-meta" style="display: none;">
+                                        <span class="slot-filename"></span>
+                                        <span class="slot-filesize"></span>
+                                        <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                    </div>
+                                </div>
+                                <div class="slot-action-icon">
+                                    <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Slot S2: Zoho Sales Register (Summary) -->
+                            <div class="register-slot-card" id="slot-card-s2" data-slot="s2" data-regtype="sale_zoho">
+                                <input type="file" class="slot-file-input" id="input-slot-s2" accept=".xlsx,.xls,.csv" style="display: none;">
+                                <div class="slot-left-badge badge-s2">S2</div>
+                                <div class="slot-info">
+                                    <div class="slot-title-wrap">
+                                        <h4 class="slot-title">Zoho Sales Register (Summary)</h4>
+                                        <span class="slot-source-pill pill-s2">S2 Summary</span>
+                                    </div>
+                                    <p class="slot-subtitle">Click to select raw Zoho sales summary register (.xlsx / .xls / .csv)</p>
+                                    <span class="slot-hint">Target Invoice Number Column &bull; Keep AJ27S, MY27S, etc.</span>
+                                    <div class="slot-file-meta" style="display: none;">
+                                        <span class="slot-filename"></span>
+                                        <span class="slot-filesize"></span>
+                                        <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                    </div>
+                                </div>
+                                <div class="slot-action-icon">
+                                    <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Slot P3: ERP Purchase Register (Summary) -->
+                            <div class="register-slot-card" id="slot-card-p3" data-slot="p3" data-regtype="purchase_erp">
+                                <input type="file" class="slot-file-input" id="input-slot-p3" accept=".xlsx,.xls,.csv" style="display: none;">
+                                <div class="slot-left-badge badge-p3">P3</div>
+                                <div class="slot-info">
+                                    <div class="slot-title-wrap">
+                                        <h4 class="slot-title">ERP Purchase Register (Summary)</h4>
+                                        <span class="slot-source-pill pill-p3">P3 Summary</span>
+                                    </div>
+                                    <p class="slot-subtitle">Click to select raw ERP purchase summary register (.xlsx / .xls / .csv)</p>
+                                    <span class="slot-hint">Target Bill No Column &bull; Keep AJ27P, MY27P, etc.</span>
+                                    <div class="slot-file-meta" style="display: none;">
+                                        <span class="slot-filename"></span>
+                                        <span class="slot-filesize"></span>
+                                        <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                    </div>
+                                </div>
+                                <div class="slot-action-icon">
+                                    <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Slot P2: Zoho Purchase Register (Summary) -->
+                            <div class="register-slot-card" id="slot-card-p2" data-slot="p2" data-regtype="purchase_zoho">
+                                <input type="file" class="slot-file-input" id="input-slot-p2" accept=".xlsx,.xls,.csv" style="display: none;">
+                                <div class="slot-left-badge badge-p2">P2</div>
+                                <div class="slot-info">
+                                    <div class="slot-title-wrap">
+                                        <h4 class="slot-title">Zoho Purchase Register (Summary)</h4>
+                                        <span class="slot-source-pill pill-p2">P2 Summary</span>
+                                    </div>
+                                    <p class="slot-subtitle">Click to select raw Zoho purchase summary register (.xlsx / .xls / .csv)</p>
+                                    <span class="slot-hint">Target Bill Number Column &bull; Keep AJ27P, MY27P, etc.</span>
+                                    <div class="slot-file-meta" style="display: none;">
+                                        <span class="slot-filename"></span>
+                                        <span class="slot-filesize"></span>
+                                        <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                    </div>
+                                </div>
+                                <div class="slot-action-icon">
+                                    <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PART 2: DETAILS REGISTERS -->
+                    <div class="sale-pur-subtab-pane" id="pane-sale-pur-details" style="display: none;">
+                        <!-- Details Category Switcher: AJ&MY&FK vs AZ -->
+                        <div class="details-category-bar">
+                            <div class="details-category-nav">
+                                <button type="button" class="details-cat-btn active" data-details-cat="aj_my_fk">
+                                    <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                        <path d="M3 6h18"></path>
+                                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                    </svg>
+                                    <span>Part 1: AJ&amp;MY&amp;FK (4 Files)</span>
+                                    <span class="subtab-count-badge" id="badge-details-aj-count" style="display: none;">0</span>
+                                </button>
+                                <button type="button" class="details-cat-btn" data-details-cat="az">
+                                    <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                    </svg>
+                                    <span>Part 2: AZ (4 Files)</span>
+                                    <span class="subtab-count-badge" id="badge-details-az-count" style="display: none;">0</span>
+                                </button>
+                                <button type="button" class="details-cat-btn" data-details-cat="both">
+                                    <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="14" width="7" height="7"></rect>
+                                        <rect x="3" y="14" width="7" height="7"></rect>
+                                    </svg>
+                                    <span>View Both (8 Files)</span>
+                                </button>
+                            </div>
+                            <button type="button" class="glass-btn btn-sm btn-sync-details" id="btn-sync-details-files" title="1-Click: Replicate uploaded files between AJ&MY&FK and AZ">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 2v6h-6"></path>
+                                    <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                                    <path d="M3 22v-6h6"></path>
+                                    <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+                                </svg>
+                                <span>Sync Files to AZ</span>
+                            </button>
+                        </div>
+
+                        <!-- SUB-SECTION 2A: AJ&MY&FK DETAILS -->
+                        <div class="details-pane-section" id="pane-details-aj">
+                            <div class="sale-pur-pane-header">
+                                <div class="pane-title-wrap">
+                                    <div class="pane-title-with-pill">
+                                        <h3 class="pane-heading">Sales &amp; Purchase Details &bull; AJ&amp;MY&amp;FK</h3>
+                                        <span class="pane-badge badge-details-aj-pill">Part 2A &bull; AJ&amp;MY&amp;FK</span>
+                                    </div>
+                                    <p class="pane-subtitle">Retains: <strong>AJ27S, MY27S, FK27S, CGJ12627</strong> (Sales) &bull; <strong>AJ27P, MY27P, FK27P, PGJ12627</strong> (Purchase). Excludes CN/DN/Returns.</p>
+                                </div>
+                            </div>
+
+                            <!-- 4 Upload Slot Cards (2x2 Grid) -->
+                            <div class="slots-grid">
+                                <!-- Slot S3-D-AJ: ERP Sales Register (AJ&MY&FK) -->
+                                <div class="register-slot-card" id="slot-card-s3_details_aj" data-slot="s3_details_aj" data-regtype="sale_erp_details_aj">
+                                    <input type="file" class="slot-file-input" id="input-slot-s3_details_aj" accept=".xlsx,.xls,.csv" style="display: none;">
+                                    <div class="slot-left-badge badge-s3-aj">S3-AJ</div>
+                                    <div class="slot-info">
+                                        <div class="slot-title-wrap">
+                                            <h4 class="slot-title">ERP Sales Details (AJ&amp;MY&amp;FK)</h4>
+                                            <span class="slot-source-pill pill-s3">AJ&amp;MY&amp;FK</span>
+                                        </div>
+                                        <p class="slot-subtitle">Raw ERP sales detail register (.xlsx / .xls / .csv)</p>
+                                        <span class="slot-hint">Header: "Invoice" &bull; Keep AJ27S, MY27S, FK27S, CGJ12627</span>
+                                        <div class="slot-file-meta" style="display: none;">
+                                            <span class="slot-filename"></span>
+                                            <span class="slot-filesize"></span>
+                                            <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                        </div>
+                                    </div>
+                                    <div class="slot-action-icon">
+                                        <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Slot S2-D-AJ: Zoho Sales Register (AJ&MY&FK) -->
+                                <div class="register-slot-card" id="slot-card-s2_details_aj" data-slot="s2_details_aj" data-regtype="sale_zoho_details_aj">
+                                    <input type="file" class="slot-file-input" id="input-slot-s2_details_aj" accept=".xlsx,.xls,.csv" style="display: none;">
+                                    <div class="slot-left-badge badge-s2-aj">S2-AJ</div>
+                                    <div class="slot-info">
+                                        <div class="slot-title-wrap">
+                                            <h4 class="slot-title">Zoho Sales Details (AJ&amp;MY&amp;FK)</h4>
+                                            <span class="slot-source-pill pill-s2">AJ&amp;MY&amp;FK</span>
+                                        </div>
+                                        <p class="slot-subtitle">Raw Zoho sales detail register (.xlsx / .xls / .csv)</p>
+                                        <span class="slot-hint">Header: "transaction_number" &bull; Keep AJ27S, MY27S, FK27S, CGJ12627</span>
+                                        <div class="slot-file-meta" style="display: none;">
+                                            <span class="slot-filename"></span>
+                                            <span class="slot-filesize"></span>
+                                            <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                        </div>
+                                    </div>
+                                    <div class="slot-action-icon">
+                                        <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Slot P3-D-AJ: ERP Purchase Register (AJ&MY&FK) -->
+                                <div class="register-slot-card" id="slot-card-p3_details_aj" data-slot="p3_details_aj" data-regtype="purchase_erp_details_aj">
+                                    <input type="file" class="slot-file-input" id="input-slot-p3_details_aj" accept=".xlsx,.xls,.csv" style="display: none;">
+                                    <div class="slot-left-badge badge-p3-aj">P3-AJ</div>
+                                    <div class="slot-info">
+                                        <div class="slot-title-wrap">
+                                            <h4 class="slot-title">ERP Purchase Details (AJ&amp;MY&amp;FK)</h4>
+                                            <span class="slot-source-pill pill-p3">AJ&amp;MY&amp;FK</span>
+                                        </div>
+                                        <p class="slot-subtitle">Raw ERP purchase detail register (.xlsx / .xls / .csv)</p>
+                                        <span class="slot-hint">Header: "Invoice" &bull; Keep AJ27P, MY27P, FK27P, PGJ12627</span>
+                                        <div class="slot-file-meta" style="display: none;">
+                                            <span class="slot-filename"></span>
+                                            <span class="slot-filesize"></span>
+                                            <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                        </div>
+                                    </div>
+                                    <div class="slot-action-icon">
+                                        <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Slot P2-D-AJ: Zoho Purchase Register (AJ&MY&FK) -->
+                                <div class="register-slot-card" id="slot-card-p2_details_aj" data-slot="p2_details_aj" data-regtype="purchase_zoho_details_aj">
+                                    <input type="file" class="slot-file-input" id="input-slot-p2_details_aj" accept=".xlsx,.xls,.csv" style="display: none;">
+                                    <div class="slot-left-badge badge-p2-aj">P2-AJ</div>
+                                    <div class="slot-info">
+                                        <div class="slot-title-wrap">
+                                            <h4 class="slot-title">Zoho Purchase Details (AJ&amp;MY&amp;FK)</h4>
+                                            <span class="slot-source-pill pill-p2">AJ&amp;MY&amp;FK</span>
+                                        </div>
+                                        <p class="slot-subtitle">Raw Zoho purchase detail register (.xlsx / .xls / .csv)</p>
+                                        <span class="slot-hint">Header: "transaction_number" &bull; Keep AJ27P, MY27P, FK27P, PGJ12627</span>
+                                        <div class="slot-file-meta" style="display: none;">
+                                            <span class="slot-filename"></span>
+                                            <span class="slot-filesize"></span>
+                                            <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                        </div>
+                                    </div>
+                                    <div class="slot-action-icon">
+                                        <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUB-SECTION 2B: AZ DETAILS -->
+                        <div class="details-pane-section" id="pane-details-az" style="display: none;">
+                            <div class="sale-pur-pane-header">
+                                <div class="pane-title-wrap">
+                                    <div class="pane-title-with-pill">
+                                        <h3 class="pane-heading">Sales &amp; Purchase Details &bull; AZ (Marketplaces)</h3>
+                                        <span class="pane-badge badge-details-az-pill">Part 2B &bull; AZ</span>
+                                    </div>
+                                    <p class="pane-subtitle">Retains: <strong>CB27S, KT27S, RZ27S, ET27S, KK27S</strong> (Sales) &bull; <strong>CB27P, KT27P, RZ27P, ET27P, KK27P</strong> (Purchase). Excludes CN/DN/Returns.</p>
+                                </div>
+                            </div>
+
+                            <!-- 4 Upload Slot Cards (2x2 Grid) -->
+                            <div class="slots-grid">
+                                <!-- Slot S3-D-AZ: ERP Sales Register (AZ) -->
+                                <div class="register-slot-card" id="slot-card-s3_details_az" data-slot="s3_details_az" data-regtype="sale_erp_details_az">
+                                    <input type="file" class="slot-file-input" id="input-slot-s3_details_az" accept=".xlsx,.xls,.csv" style="display: none;">
+                                    <div class="slot-left-badge badge-s3-az">S3-AZ</div>
+                                    <div class="slot-info">
+                                        <div class="slot-title-wrap">
+                                            <h4 class="slot-title">ERP Sales Details (AZ)</h4>
+                                            <span class="slot-source-pill pill-s3">AZ Marketplaces</span>
+                                        </div>
+                                        <p class="slot-subtitle">Raw ERP sales detail register (.xlsx / .xls / .csv)</p>
+                                        <span class="slot-hint">Header: "Invoice" &bull; Keep CB27S, KT27S, RZ27S, ET27S, KK27S</span>
+                                        <div class="slot-file-meta" style="display: none;">
+                                            <span class="slot-filename"></span>
+                                            <span class="slot-filesize"></span>
+                                            <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                        </div>
+                                    </div>
+                                    <div class="slot-action-icon">
+                                        <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Slot S2-D-AZ: Zoho Sales Register (AZ) -->
+                                <div class="register-slot-card" id="slot-card-s2_details_az" data-slot="s2_details_az" data-regtype="sale_zoho_details_az">
+                                    <input type="file" class="slot-file-input" id="input-slot-s2_details_az" accept=".xlsx,.xls,.csv" style="display: none;">
+                                    <div class="slot-left-badge badge-s2-az">S2-AZ</div>
+                                    <div class="slot-info">
+                                        <div class="slot-title-wrap">
+                                            <h4 class="slot-title">Zoho Sales Details (AZ)</h4>
+                                            <span class="slot-source-pill pill-s2">AZ Marketplaces</span>
+                                        </div>
+                                        <p class="slot-subtitle">Raw Zoho sales detail register (.xlsx / .xls / .csv)</p>
+                                        <span class="slot-hint">Header: "transaction_number" &bull; Keep CB27S, KT27S, RZ27S, ET27S, KK27S</span>
+                                        <div class="slot-file-meta" style="display: none;">
+                                            <span class="slot-filename"></span>
+                                            <span class="slot-filesize"></span>
+                                            <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                        </div>
+                                    </div>
+                                    <div class="slot-action-icon">
+                                        <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Slot P3-D-AZ: ERP Purchase Register (AZ) -->
+                                <div class="register-slot-card" id="slot-card-p3_details_az" data-slot="p3_details_az" data-regtype="purchase_erp_details_az">
+                                    <input type="file" class="slot-file-input" id="input-slot-p3_details_az" accept=".xlsx,.xls,.csv" style="display: none;">
+                                    <div class="slot-left-badge badge-p3-az">P3-AZ</div>
+                                    <div class="slot-info">
+                                        <div class="slot-title-wrap">
+                                            <h4 class="slot-title">ERP Purchase Details (AZ)</h4>
+                                            <span class="slot-source-pill pill-p3">AZ Marketplaces</span>
+                                        </div>
+                                        <p class="slot-subtitle">Raw ERP purchase detail register (.xlsx / .xls / .csv)</p>
+                                        <span class="slot-hint">Header: "Invoice" &bull; Keep CB27P, KT27P, RZ27P, ET27P, KK27P</span>
+                                        <div class="slot-file-meta" style="display: none;">
+                                            <span class="slot-filename"></span>
+                                            <span class="slot-filesize"></span>
+                                            <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                        </div>
+                                    </div>
+                                    <div class="slot-action-icon">
+                                        <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Slot P2-D-AZ: Zoho Purchase Register (AZ) -->
+                                <div class="register-slot-card" id="slot-card-p2_details_az" data-slot="p2_details_az" data-regtype="purchase_zoho_details_az">
+                                    <input type="file" class="slot-file-input" id="input-slot-p2_details_az" accept=".xlsx,.xls,.csv" style="display: none;">
+                                    <div class="slot-left-badge badge-p2-az">P2-AZ</div>
+                                    <div class="slot-info">
+                                        <div class="slot-title-wrap">
+                                            <h4 class="slot-title">Zoho Purchase Details (AZ)</h4>
+                                            <span class="slot-source-pill pill-p2">AZ Marketplaces</span>
+                                        </div>
+                                        <p class="slot-subtitle">Raw Zoho purchase detail register (.xlsx / .xls / .csv)</p>
+                                        <span class="slot-hint">Header: "transaction_number" &bull; Keep CB27P, KT27P, RZ27P, ET27P, KK27P</span>
+                                        <div class="slot-file-meta" style="display: none;">
+                                            <span class="slot-filename"></span>
+                                            <span class="slot-filesize"></span>
+                                            <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                        </div>
+                                    </div>
+                                    <div class="slot-action-icon">
+                                        <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 2: CREDIT NOTES (2 FILES) -->
+                <div class="cleaner-tab-content" id="tab-credit-notes" style="display: none;">
+                    <!-- Rule Card -->
+                    <div class="filter-rules-banner">
+                        <div class="rules-banner-header">
+                            <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <span class="rules-banner-title">Automated Credit Notes Filter Validation Rules</span>
+                        </div>
+                        <div class="rules-columns-grid single-col">
+                            <div class="rules-subcard">
+                                <div class="rules-subcard-title">
+                                    <span class="subcard-dot dot-cn"></span>
+                                    <h4>Zoho &amp; ERP Credit Notes (CREDIT NOTE_Details_*.xlsx)</h4>
+                                </div>
+                                <div class="rules-chips-wrap">
+                                    <span class="rules-chip-label">Retains:</span>
+                                    <div class="chips-list">
+                                        <span class="rule-chip chip-cn">AJ27SCN</span>
+                                        <span class="rule-chip chip-cn">MY27SCN</span>
+                                        <span class="rule-chip chip-cn">FK27SCN</span>
+                                        <span class="rule-chip chip-cn">RCGJ12627</span>
+                                        <span class="rule-chip chip-cn">RCGJ126</span>
+                                    </div>
+                                </div>
+                                <div class="rule-alert-box alert-danger">
+                                    <svg class="alert-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    <span>Automatically deletes: CB27SR, KT27SR, RZ27SR, ET27SR, numeric IDs &amp; other series.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2 Upload Slot Cards -->
+                    <div class="slots-grid slots-grid-2">
+                        <!-- Slot C3: ERP Credit Notes -->
+                        <div class="register-slot-card" id="slot-card-c3" data-slot="c3" data-regtype="credit_note_erp">
+                            <input type="file" class="slot-file-input" id="input-slot-c3" accept=".xlsx,.xls,.csv" style="display: none;">
+                            <div class="slot-left-badge badge-c3">C3</div>
+                            <div class="slot-info">
+                                <div class="slot-title-wrap">
+                                    <h4 class="slot-title">ERP Credit Notes</h4>
+                                    <span class="slot-source-pill pill-c3">S3 Return</span>
+                                </div>
+                                <p class="slot-subtitle">Click to select raw ERP sales return register (.xlsx / .xls / .csv)</p>
+                                <span class="slot-hint">Target Voucher Column • Keep AJ27SCN, MY27SCN, FK27SCN, RCGJ12627</span>
+                                <div class="slot-file-meta" style="display: none;">
+                                    <span class="slot-filename"></span>
+                                    <span class="slot-filesize"></span>
+                                    <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                </div>
+                            </div>
+                            <div class="slot-action-icon">
+                                <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Slot C2: Zoho Credit Notes -->
+                        <div class="register-slot-card" id="slot-card-c2" data-slot="c2" data-regtype="credit_note_zoho">
+                            <input type="file" class="slot-file-input" id="input-slot-c2" accept=".xlsx,.xls,.csv" style="display: none;">
+                            <div class="slot-left-badge badge-c2">C2</div>
+                            <div class="slot-info">
+                                <div class="slot-title-wrap">
+                                    <h4 class="slot-title">Zoho Credit Notes</h4>
+                                    <span class="slot-source-pill pill-c2">S2 Return</span>
+                                </div>
+                                <p class="slot-subtitle">Click to select raw Zoho Credit Note report (.xlsx / .xls / .csv)</p>
+                                <span class="slot-hint">Target Creditnote Number Column • Keep AJ27SCN, MY27SCN, FK27SCN, RCGJ12627</span>
+                                <div class="slot-file-meta" style="display: none;">
+                                    <span class="slot-filename"></span>
+                                    <span class="slot-filesize"></span>
+                                    <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                </div>
+                            </div>
+                            <div class="slot-action-icon">
+                                <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB 3: DEBIT NOTES (2 FILES) -->
+                <div class="cleaner-tab-content" id="tab-debit-notes" style="display: none;">
+                    <!-- Rule Card -->
+                    <div class="filter-rules-banner">
+                        <div class="rules-banner-header">
+                            <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <span class="rules-banner-title">Automated Debit Notes Filter Validation Rules</span>
+                        </div>
+                        <div class="rules-columns-grid single-col">
+                            <div class="rules-subcard">
+                                <div class="rules-subcard-title">
+                                    <span class="subcard-dot dot-dn"></span>
+                                    <h4>Zoho &amp; ERP Debit Notes (Vendor Credits / DEBIT NOTE_Details_*.xlsx)</h4>
+                                </div>
+                                <div class="rules-chips-wrap">
+                                    <span class="rules-chip-label">Retains:</span>
+                                    <div class="chips-list">
+                                        <span class="rule-chip chip-dn">AJ27PDN</span>
+                                        <span class="rule-chip chip-dn">MY27PDN</span>
+                                        <span class="rule-chip chip-dn">FK27PDN</span>
+                                        <span class="rule-chip chip-dn">PCGJ12627</span>
+                                        <span class="rule-chip chip-dn">PCGJ126</span>
+                                    </div>
+                                </div>
+                                <div class="rule-alert-box alert-danger">
+                                    <svg class="alert-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    <span>Automatically deletes: all non-authorized vendor debit notes &amp; adjustments.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2 Upload Slot Cards -->
+                    <div class="slots-grid slots-grid-2">
+                        <!-- Slot D3: ERP Debit Notes -->
+                        <div class="register-slot-card" id="slot-card-d3" data-slot="d3" data-regtype="debit_note_erp">
+                            <input type="file" class="slot-file-input" id="input-slot-d3" accept=".xlsx,.xls,.csv" style="display: none;">
+                            <div class="slot-left-badge badge-d3">D3</div>
+                            <div class="slot-info">
+                                <div class="slot-title-wrap">
+                                    <h4 class="slot-title">ERP Debit Notes</h4>
+                                    <span class="slot-source-pill pill-d3">P3 Return</span>
+                                </div>
+                                <p class="slot-subtitle">Click to select raw ERP purchase return register (.xlsx / .xls / .csv)</p>
+                                <span class="slot-hint">Target Bill / Voucher Column • Keep AJ27PDN, MY27PDN, FK27PDN, PCGJ12627</span>
+                                <div class="slot-file-meta" style="display: none;">
+                                    <span class="slot-filename"></span>
+                                    <span class="slot-filesize"></span>
+                                    <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                </div>
+                            </div>
+                            <div class="slot-action-icon">
+                                <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Slot D2: Zoho Debit Notes -->
+                        <div class="register-slot-card" id="slot-card-d2" data-slot="d2" data-regtype="debit_note_zoho">
+                            <input type="file" class="slot-file-input" id="input-slot-d2" accept=".xlsx,.xls,.csv" style="display: none;">
+                            <div class="slot-left-badge badge-d2">D2</div>
+                            <div class="slot-info">
+                                <div class="slot-title-wrap">
+                                    <h4 class="slot-title">Zoho Debit Notes</h4>
+                                    <span class="slot-source-pill pill-d2">P2 Return</span>
+                                </div>
+                                <p class="slot-subtitle">Click to select raw Zoho Debit Note report (.xlsx / .xls / .csv)</p>
+                                <span class="slot-hint">Target Vendor Credit / Bill Column • Keep AJ27PDN, MY27PDN, FK27PDN, PCGJ12627</span>
+                                <div class="slot-file-meta" style="display: none;">
+                                    <span class="slot-filename"></span>
+                                    <span class="slot-filesize"></span>
+                                    <button type="button" class="btn-slot-remove" title="Remove this file">&times;</button>
+                                </div>
+                            </div>
+                            <div class="slot-action-icon">
+                                <svg class="slot-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Output Format & Action Bar -->
+                <div class="cleaner-bottom-bar">
+                    <div class="cleaner-left-actions">
+                        <button type="button" class="glass-btn" id="btn-cleaner-clear">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                            <span>Clear Files</span>
+                        </button>
+                        <div class="cleaner-format-selector">
+                            <label for="cleaner-output-format-bar">Output Format:</label>
+                            <select id="cleaner-output-format-bar" class="form-input form-select-sm">
+                                <option value="csv" selected>Comma-Separated Values (.csv) - Fastest &amp; Bandwidth Saver</option>
+                                <option value="xlsx">Excel Spreadsheet (.xlsx)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="button" class="glass-btn glass-btn-primary action-btn-large" id="btn-clean-selected">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                        </svg>
+                        <span>Clean Selected Files</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- File Upload & Dropzone Section -->
+            <section class="section-card upload-section">
+                <div class="section-header">
+                    <div class="section-title-wrap">
+                        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <div>
+                            <h2 class="section-heading">Upload Source Files</h2>
+                            <p class="section-desc">Drag & drop files, pick multiple files, or select an entire folder</p>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <!-- Glass Transparent Action Buttons -->
+                        <button type="button" class="glass-btn" id="btn-browse-zip" title="Upload multiple ZIP archives">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                            <span>Upload ZIPs</span>
+                        </button>
+                        <button type="button" class="glass-btn" id="btn-browse-folder" title="Upload all files from a directory">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <span>Select Folder</span>
+                        </button>
+                        <button type="button" class="glass-btn" id="btn-browse-files">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="12" y1="18" x2="12" y2="12"></line>
+                                <line x1="9" y1="15" x2="15" y2="15"></line>
+                            </svg>
+                            <span>Select Files</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hidden inputs -->
+                <input type="file" id="file-input-files" multiple accept=".xlsx,.xls,.csv,.zip" style="display: none;">
+                <input type="file" id="file-input-folder" webkitdirectory directory multiple style="display: none;">
+                <input type="file" id="file-input-zip" multiple accept=".zip" style="display: none;">
+
+                <!-- Dropzone Box -->
+                <div class="dropzone" id="dropzone">
+                    <div class="dropzone-content">
+                        <div class="dropzone-icon-wrap">
+                            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
+                                <path d="M12 12v9"></path>
+                                <path d="m16 16-4-4-4 4"></path>
+                            </svg>
+                        </div>
+                        <div class="dropzone-text">
+                            <p class="dropzone-title">Drag &amp; drop Excel, CSV, or ZIP files here</p>
+                            <p class="dropzone-subtitle">Supports .xlsx, .xls, .csv, and .zip archives &bull; Auto-extracts and merges effortlessly</p>
+                        </div>
+                        <div class="dropzone-actions">
+                            <button type="button" class="glass-btn glass-btn-primary" id="btn-dropzone-click">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                <span>Browse Files</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Queue Table & Summary Bar -->
+                <div class="file-queue-container" id="queue-container" style="display: none;">
+                    <div class="queue-summary-bar">
+                        <div class="summary-stat">
+                            <span class="stat-label">Files Queued:</span>
+                            <span class="stat-value" id="stat-file-count">0</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="stat-label">Total Size:</span>
+                            <span class="stat-value" id="stat-total-size">0 KB</span>
+                        </div>
+                        <div class="queue-actions">
+                            <button type="button" class="glass-btn glass-btn-danger" id="btn-clear-queue">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                                <span>Clear All</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-scroll-wrap">
+                        <table class="file-table" id="file-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>File Name</th>
+                                    <th>Format</th>
+                                    <th>File Size</th>
+                                    <th>Status</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="file-table-body">
+                                <!-- Populated dynamically by app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Merge Execution & Output Options Section -->
+            <section class="section-card export-section" id="export-section" style="display: none;">
+                <div class="section-header">
+                    <div class="section-title-wrap">
+                        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="8 17 12 21 16 17"></polyline>
+                            <line x1="12" y1="12" x2="12" y2="21"></line>
+                            <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+                        </svg>
+                        <div>
+                            <h2 class="section-heading">Output Options & Execution</h2>
+                            <p class="section-desc">Specify output parameters, preview merged dataset, and export</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-options-grid">
+                    <div class="form-group">
+                        <label for="output-filename">Output File Name</label>
+                        <div class="input-with-extension">
+                            <input type="text" id="output-filename" class="form-input" value="Merged_Data">
+                            <span class="file-extension-badge" id="output-ext-label">.xlsx</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="output-format">Export Format</label>
+                        <select id="output-format" class="form-input form-select">
+                            <option value="xlsx" selected>Excel Workbook (.xlsx)</option>
+                            <option value="csv">Comma-Separated Values (.csv)</option>
+                            <option value="zip">Consolidated ZIP Archive (.zip)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Progress Bar Container -->
+                <div class="progress-box" id="progress-box" style="display: none;">
+                    <div class="progress-header">
+                        <span class="progress-title" id="progress-status-text">Processing files...</span>
+                        <span class="progress-percentage" id="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Cleaning Statistics Audit Card -->
+                <div class="cleaning-stats-card" id="cleaning-stats-card" style="display: none;">
+                    <div class="stats-header">
+                        <div class="stats-title-wrap">
+                            <div class="stats-icon-box">
+                                <svg class="stats-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="stats-heading">Zero-RAM Cleaning Audit &amp; Performance Report</h3>
+                                <p class="stats-subtext" id="stats-file-info">Audit for processed register</p>
+                            </div>
+                        </div>
+                        <div class="safe-badge" title="Peak RAM consumption is well below Render 512 MB cgroup limit">
+                            <svg class="safe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            <span>512 MB Render Safe</span>
+                        </div>
+                    </div>
+                    <div class="stats-metrics-grid">
+                        <div class="metric-box">
+                            <span class="metric-label">Detected Column</span>
+                            <span class="metric-value text-primary" id="stat-col-detected">-</span>
+                            <span class="metric-sub" id="stat-header-row">Header Row: -</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-label">Total Data Rows</span>
+                            <span class="metric-value" id="stat-orig-rows">0</span>
+                            <span class="metric-sub">Before Filtering</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-label">Retained Valid Rows</span>
+                            <span class="metric-value text-success" id="stat-retained-rows">0</span>
+                            <span class="metric-sub">Authorized Series</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-label">Excluded / Dropped</span>
+                            <span class="metric-value text-danger" id="stat-excluded-rows">0</span>
+                            <span class="metric-sub">Unauthorized / CN / DN</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-label">Peak Memory (RAM)</span>
+                            <span class="metric-value text-info" id="stat-peak-ram">0 MB</span>
+                            <span class="metric-sub">&lt; 35 MB Target</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-label">Processing Time</span>
+                            <span class="metric-value" id="stat-duration">0.0s</span>
+                            <span class="metric-sub">Stream Velocity</span>
+                        </div>
+                    </div>
+
+                    <!-- Prominent Download Section inside Audit Card (ZIP + Individual Files) -->
+                    <div class="stats-download-section" id="stats-download-section" style="display: none;">
+                        <!-- Multi-file ZIP Download Banner (Visible when > 1 file) -->
+                        <div class="stats-zip-box" id="stats-zip-box" style="display: none;">
+                            <div class="download-info-wrap">
+                                <div class="download-icon-circle zip-circle">
+                                    <svg class="download-check-icon zip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <div class="download-text-wrap">
+                                    <span class="download-file-title" id="zip-file-name">Cleaned_GST_Registers.zip</span>
+                                    <span class="download-file-desc" id="zip-file-desc">Complete package with all cleaned registers bundled into one archive</span>
+                                </div>
+                            </div>
+                            <button type="button" class="glass-btn glass-btn-primary action-btn-large" id="btn-download-zip">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                <span id="btn-download-zip-text">Download All (ZIP)</span>
+                            </button>
+                        </div>
+
+                        <!-- Individual Cleaned Files Header & List -->
+                        <div class="individual-downloads-wrap" id="individual-downloads-wrap">
+                            <div class="individual-downloads-header" id="individual-downloads-header">
+                                <span class="individual-heading">Cleaned Register Files:</span>
+                                <span class="individual-subtext">Download each file separately or inspect individual results</span>
+                            </div>
+                            <div class="cleaned-files-grid" id="cleaned-files-grid">
+                                <!-- Dynamically populated by app.js -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Merged Result & Action Box -->
+                <div class="merged-result-box" id="merged-result-box" style="display: none;">
+                    <div class="merged-result-card">
+                        <div class="merged-result-info">
+                            <div class="merged-badge-row">
+                                <span class="merged-status-badge">
+                                    <svg class="status-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                    <span>Dataset Merged Successfully</span>
+                                </span>
+                                <span class="merged-mode-tag" id="merged-mode-tag">Standard Mode</span>
+                            </div>
+                            <div class="merged-filename-heading" id="merged-result-filename">Merged_File.xlsx</div>
+                            <div class="merged-stats-pills">
+                                <span class="merged-stat-pill">
+                                    <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                    </svg>
+                                    <strong id="merged-result-rows">0</strong>&nbsp;Rows
+                                </span>
+                                <span class="merged-stat-pill">
+                                    <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                                    </svg>
+                                    <strong id="merged-result-cols">0</strong>&nbsp;Columns
+                                </span>
+                                <span class="merged-stat-pill">
+                                    <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    </svg>
+                                    <strong id="merged-result-size">0 KB</strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="merged-result-actions">
+                            <button type="button" class="glass-btn glass-btn-primary action-btn-large" id="btn-download-merged">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                <span>Download Merged File</span>
+                            </button>
+                            <button type="button" class="glass-btn glass-btn-cleaner action-btn-large" id="btn-send-to-cleaner" style="display: none;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                    <path d="m9 12 2 2 4-4"></path>
+                                </svg>
+                                <span>Send to Clean Excel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Merge Action Bar -->
+                <div class="action-bar">
+                    <button type="button" class="glass-btn" id="btn-preview-data">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <span>Preview Merged Data</span>
+                    </button>
+                    <button type="button" class="glass-btn glass-btn-primary action-btn-large" id="btn-merge-download">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        <span>Merge Files</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Data Preview Modal / Drawer -->
+            <div class="preview-modal-overlay" id="preview-modal" style="display: none;">
+                <div class="preview-modal-dialog">
+                    <div class="preview-modal-header">
+                        <div class="preview-title-box">
+                            <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                <line x1="9" y1="21" x2="9" y2="9"></line>
+                            </svg>
+                            <div>
+                                <h3 class="preview-heading">Merged Data Preview</h3>
+                                <p class="preview-subtext" id="preview-stats-text">Showing first 25 rows</p>
+                            </div>
+                        </div>
+                        <button type="button" class="glass-btn" id="btn-close-preview">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                            <span>Close</span>
+                        </button>
+                    </div>
+                    <div class="preview-modal-body">
+                        <div class="preview-table-scroll">
+                            <table class="preview-table" id="preview-table">
+                                <thead id="preview-table-head">
+                                    <!-- Dynamic headers -->
+                                </thead>
+                                <tbody id="preview-table-body">
+                                    <!-- Dynamic sample rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Send to Clean Excel Modal Dialog -->
+            <div class="cleaner-modal-overlay" id="modal-send-cleaner" style="display: none;">
+                <div class="cleaner-modal-dialog">
+                    <!-- Modal Header -->
+                    <div class="cleaner-modal-header">
+                        <div class="cleaner-modal-title-box">
+                            <div class="cleaner-modal-icon-wrap">
+                                <svg class="cleaner-modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                    <path d="m9 12 2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="cleaner-modal-heading">Send Merged File to GST Register Cleaner</h3>
+                                <p class="cleaner-modal-subtext">Select one or more destination slots to attach this merged file (Multi-select enabled):</p>
+                            </div>
+                        </div>
+                        <button type="button" class="glass-btn btn-modal-close" id="btn-close-send-modal">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Merged File Summary Banner -->
+                    <div class="cleaner-modal-file-banner">
+                        <div class="banner-file-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <div class="banner-file-meta">
+                            <span class="banner-filename" id="send-modal-filename">Merged_File.xlsx</span>
+                            <span class="banner-stats" id="send-modal-stats">0 rows &bull; 0 KB</span>
+                        </div>
+                    </div>
+
+                    <!-- Slot Selection Container (Scrollable) -->
+                    <div class="cleaner-modal-body">
+                        <!-- Group 1: Sales & Purchase Registers - Summary (Part 1) -->
+                        <div class="slot-select-group">
+                            <div class="slot-group-title">
+                                <span class="group-dot dot-sale-pur"></span>
+                                <span>Sales &amp; Purchase Registers &bull; Summary (Part 1)</span>
+                            </div>
+                            <div class="slot-cards-selection-grid">
+                                <!-- S3 ERP Sales Summary -->
+                                <label class="slot-select-card" for="slot-opt-s3">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-s3" value="s3">
+                                    <div class="slot-select-badge badge-s3">S3</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">ERP Sales Register (Summary)</span>
+                                        <span class="slot-select-series">Retains AJ27S, MY27S, FK27S, CB27S...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- S2 Zoho Sales Summary -->
+                                <label class="slot-select-card" for="slot-opt-s2">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-s2" value="s2">
+                                    <div class="slot-select-badge badge-s2">S2</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">Zoho Sales Register (Summary)</span>
+                                        <span class="slot-select-series">Retains AJ27S, MY27S, FK27S, CB27S...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- P3 ERP Purchase Summary -->
+                                <label class="slot-select-card" for="slot-opt-p3">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-p3" value="p3">
+                                    <div class="slot-select-badge badge-p3">P3</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">ERP Purchase Register (Summary)</span>
+                                        <span class="slot-select-series">Retains AJ27P, MY27P, FK27P, CB27P...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- P2 Zoho Purchase Summary -->
+                                <label class="slot-select-card" for="slot-opt-p2">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-p2" value="p2">
+                                    <div class="slot-select-badge badge-p2">P2</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">Zoho Purchase Register (Summary)</span>
+                                        <span class="slot-select-series">Retains AJ27P, MY27P, FK27P, CB27P...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Group 2: Sales & Purchase Details - AJ&MY&FK (Part 2A) -->
+                        <div class="slot-select-group">
+                            <div class="slot-group-title">
+                                <span class="group-dot dot-sale-pur"></span>
+                                <span>Sales &amp; Purchase Details &bull; AJ&amp;MY&amp;FK (Part 2A)</span>
+                            </div>
+                            <div class="slot-cards-selection-grid">
+                                <!-- S3-D AJ ERP Sales Details -->
+                                <label class="slot-select-card" for="slot-opt-s3_details_aj">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-s3_details_aj" value="s3_details_aj">
+                                    <div class="slot-select-badge badge-s3-aj">S3-AJ</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">ERP Sales Details (AJ&amp;MY&amp;FK)</span>
+                                        <span class="slot-select-series">Header: "Invoice" &bull; AJ27S, MY27S, FK27S, CGJ12627</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- S2-D AJ Zoho Sales Details -->
+                                <label class="slot-select-card" for="slot-opt-s2_details_aj">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-s2_details_aj" value="s2_details_aj">
+                                    <div class="slot-select-badge badge-s2-aj">S2-AJ</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">Zoho Sales Details (AJ&amp;MY&amp;FK)</span>
+                                        <span class="slot-select-series">Header: "transaction_number" &bull; AJ27S, MY27S, FK27S...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- P3-D AJ ERP Purchase Details -->
+                                <label class="slot-select-card" for="slot-opt-p3_details_aj">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-p3_details_aj" value="p3_details_aj">
+                                    <div class="slot-select-badge badge-p3-aj">P3-AJ</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">ERP Purchase Details (AJ&amp;MY&amp;FK)</span>
+                                        <span class="slot-select-series">Header: "Invoice" &bull; AJ27P, MY27P, FK27P, PGJ12627</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- P2-D AJ Zoho Purchase Details -->
+                                <label class="slot-select-card" for="slot-opt-p2_details_aj">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-p2_details_aj" value="p2_details_aj">
+                                    <div class="slot-select-badge badge-p2-aj">P2-AJ</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">Zoho Purchase Details (AJ&amp;MY&amp;FK)</span>
+                                        <span class="slot-select-series">Header: "transaction_number" &bull; AJ27P, MY27P, FK27P...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Group 2B: Sales & Purchase Details - AZ (Part 2B) -->
+                        <div class="slot-select-group">
+                            <div class="slot-group-title">
+                                <span class="group-dot dot-sale-pur"></span>
+                                <span>Sales &amp; Purchase Details &bull; AZ (Part 2B)</span>
+                            </div>
+                            <div class="slot-cards-selection-grid">
+                                <!-- S3-D AZ ERP Sales Details -->
+                                <label class="slot-select-card" for="slot-opt-s3_details_az">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-s3_details_az" value="s3_details_az">
+                                    <div class="slot-select-badge badge-s3-az">S3-AZ</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">ERP Sales Details (AZ)</span>
+                                        <span class="slot-select-series">Header: "Invoice" &bull; CB27S, KT27S, RZ27S, ET27S, KK27S</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- S2-D AZ Zoho Sales Details -->
+                                <label class="slot-select-card" for="slot-opt-s2_details_az">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-s2_details_az" value="s2_details_az">
+                                    <div class="slot-select-badge badge-s2-az">S2-AZ</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">Zoho Sales Details (AZ)</span>
+                                        <span class="slot-select-series">Header: "transaction_number" &bull; CB27S, KT27S, RZ27S...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- P3-D AZ ERP Purchase Details -->
+                                <label class="slot-select-card" for="slot-opt-p3_details_az">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-p3_details_az" value="p3_details_az">
+                                    <div class="slot-select-badge badge-p3-az">P3-AZ</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">ERP Purchase Details (AZ)</span>
+                                        <span class="slot-select-series">Header: "Invoice" &bull; CB27P, KT27P, RZ27P, ET27P, KK27P</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- P2-D AZ Zoho Purchase Details -->
+                                <label class="slot-select-card" for="slot-opt-p2_details_az">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-p2_details_az" value="p2_details_az">
+                                    <div class="slot-select-badge badge-p2-az">P2-AZ</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">Zoho Purchase Details (AZ)</span>
+                                        <span class="slot-select-series">Header: "transaction_number" &bull; CB27P, KT27P, RZ27P...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Group 2: Credit Notes (Tab 2) -->
+                        <div class="slot-select-group">
+                            <div class="slot-group-title">
+                                <span class="group-dot dot-cn"></span>
+                                <span>Credit Notes (Tab 2)</span>
+                            </div>
+                            <div class="slot-cards-selection-grid">
+                                <!-- C3 ERP Credit Notes -->
+                                <label class="slot-select-card" for="slot-opt-c3">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-c3" value="c3">
+                                    <div class="slot-select-badge badge-c3">C3</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">ERP Credit Notes</span>
+                                        <span class="slot-select-series">Retains AJ27SCN, MY27SCN, RCGJ12627...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- C2 Zoho Credit Notes -->
+                                <label class="slot-select-card" for="slot-opt-c2">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-c2" value="c2">
+                                    <div class="slot-select-badge badge-c2">C2</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">Zoho Credit Notes</span>
+                                        <span class="slot-select-series">Retains AJ27SCN, MY27SCN, RCGJ12627...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Group 3: Debit Notes (Tab 3) -->
+                        <div class="slot-select-group">
+                            <div class="slot-group-title">
+                                <span class="group-dot dot-dn"></span>
+                                <span>Debit Notes (Tab 3)</span>
+                            </div>
+                            <div class="slot-cards-selection-grid">
+                                <!-- D3 ERP Debit Notes -->
+                                <label class="slot-select-card" for="slot-opt-d3">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-d3" value="d3">
+                                    <div class="slot-select-badge badge-d3">D3</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">ERP Debit Notes</span>
+                                        <span class="slot-select-series">Retains AJ27PDN, MY27PDN, PCGJ12627...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+
+                                <!-- D2 Zoho Debit Notes -->
+                                <label class="slot-select-card" for="slot-opt-d2">
+                                    <input type="checkbox" name="cleaner-target-slot" id="slot-opt-d2" value="d2">
+                                    <div class="slot-select-badge badge-d2">D2</div>
+                                    <div class="slot-select-info">
+                                        <span class="slot-select-name">Zoho Debit Notes</span>
+                                        <span class="slot-select-series">Retains AJ27PDN, MY27PDN, PCGJ12627...</span>
+                                    </div>
+                                    <div class="slot-select-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="cleaner-modal-footer">
+                        <button type="button" class="glass-btn" id="btn-cancel-send-cleaner">Cancel</button>
+                        <button type="button" class="glass-btn glass-btn-cleaner action-btn-large" id="btn-confirm-send-cleaner">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                            <span>Send &amp; Attach File</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- System Toast Container -->
+        <div class="toast-container" id="toast-container"></div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <span>MASTER EXCEL TOOLS &bull; Ready for Render Deployment</span>
+                <span class="footer-sep">&bull;</span>
+                <span>Supports Normal Excel (.xlsx, .xls), CSV, ZIP &amp; Zoho Books Exports</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Application Script with Cache-Busting -->
+    <script src="app.js?v=20261118_2225"></script>
+</body>
+</html>
