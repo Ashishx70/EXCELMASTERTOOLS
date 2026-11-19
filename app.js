@@ -403,35 +403,243 @@
         });
     }
 
-    // Resilient Column Header Normalizer (lowercase & ignores all whitespace, symbols, punctuation)
+    // Resilient Column Header Normalizer (lowercase & ignores whitespace, symbols, punctuation, and currency tags)
     function normalizeColHeader(str) {
-        return String(str || '').toLowerCase().replace(/[\s_\.\-\#\(\)]+/g, '');
+        return String(str || '')
+            .toLowerCase()
+            .replace(/[\s_\.\-\#\(\)\[\]\/\:\;\\\'\"₹,]+/g, '')
+            .replace(/(inr|rs)$/i, '');
     }
+
+    // Comprehensive column aliases for ERP & Zoho fields
+    const COLUMN_ALIASES = {
+        // ERP Sale CGST
+        outputtaxcgstamount: [
+            'outputtaxcgstamount', 'outputtaxcgst', 'outputcgstamount', 'outputcgstamt', 'outputcgst',
+            'taxcgstamount', 'taxcgst', 'cgstamount', 'cgstamt', 'cgstvalue', 'cgsttaxamount', 'cgsttax',
+            'cgstoutputamount', 'cgstoutput', 'centraltaxamount', 'centraltaxamt', 'centraltax',
+            'outputcentraltaxamount', 'outputcentraltax', 'cgst'
+        ],
+        // ERP Sale SGST
+        outputtaxsgstamount: [
+            'outputtaxsgstamount', 'outputtaxsgst', 'outputsgstamount', 'outputsgstamt', 'outputsgst',
+            'taxsgstamount', 'taxsgst', 'sgstamount', 'sgstamt', 'sgstvalue', 'sgsttaxamount', 'sgsttax',
+            'sgstoutputamount', 'sgstoutput', 'statetaxamount', 'statetaxamt', 'statetax',
+            'outputstatetaxamount', 'outputstatetax', 'outputtaxutgstamount', 'outputtaxutgst',
+            'outpututgstamount', 'outpututgst', 'utgstamount', 'utgstamt', 'utgst', 'sgst'
+        ],
+        // ERP Purchase CGST
+        inputtaxcgstamount: [
+            'inputtaxcgstamount', 'inputtaxcgst', 'inputcgstamount', 'inputcgstamt', 'inputcgst',
+            'taxcgstamount', 'taxcgst', 'cgstamount', 'cgstamt', 'cgstvalue', 'cgsttaxamount', 'cgsttax',
+            'cgstinputamount', 'cgstinput', 'centraltaxamount', 'centraltaxamt', 'centraltax',
+            'inputcentraltaxamount', 'inputcentraltax', 'cgst'
+        ],
+        // ERP Purchase SGST
+        inputtaxsgstamount: [
+            'inputtaxsgstamount', 'inputtaxsgst', 'inputsgstamount', 'inputsgstamt', 'inputsgst',
+            'taxsgstamount', 'taxsgst', 'sgstamount', 'sgstamt', 'sgstvalue', 'sgsttaxamount', 'sgsttax',
+            'sgstinputamount', 'sgstinput', 'statetaxamount', 'statetaxamt', 'statetax',
+            'inputstatetaxamount', 'inputstatetax', 'inputtaxutgstamount', 'inputtaxutgst',
+            'inpututgstamount', 'inpututgst', 'utgstamount', 'utgstamt', 'utgst', 'sgst'
+        ],
+        // IGST (Sale & Purchase)
+        igstamount: [
+            'igstamount', 'outputtaxigstamount', 'inputtaxigstamount', 'outputigstamount', 'inputigstamount',
+            'outputtaxigst', 'inputtaxigst', 'outputigst', 'inputigst', 'taxigstamount', 'taxigst',
+            'igstamt', 'igstvalue', 'igsttaxamount', 'igsttax', 'integratedtaxamount', 'integratedtaxamt',
+            'integratedtax', 'integratedgst', 'igst'
+        ],
+        // Zoho CGST
+        cgst: [
+            'cgst', 'cgstamount', 'cgstamt', 'outputtaxcgstamount', 'outputtaxcgst', 'inputtaxcgstamount',
+            'inputtaxcgst', 'taxcgstamount', 'taxcgst', 'centraltaxamount', 'centraltax'
+        ],
+        // Zoho SGST
+        sgst: [
+            'sgst', 'sgstamount', 'sgstamt', 'outputtaxsgstamount', 'outputtaxsgst', 'inputtaxsgstamount',
+            'inputtaxsgst', 'taxsgstamount', 'taxsgst', 'statetaxamount', 'statetax', 'utgstamount', 'utgst'
+        ],
+        // Zoho IGST
+        igst: [
+            'igst', 'igstamount', 'igstamt', 'outputtaxigstamount', 'inputtaxigstamount', 'taxigstamount',
+            'taxigst', 'integratedtaxamount', 'integratedtax'
+        ],
+        // Total Tax
+        totaltax: [
+            'totaltax', 'totaltaxamount', 'totaltaxamt', 'taxamount', 'taxamt', 'bcytaxamount',
+            'totaltaxes', 'gstamount', 'gstamt', 'tax'
+        ],
+        bcytaxamount: [
+            'bcytaxamount', 'totaltax', 'totaltaxamount', 'taxamount', 'taxamt', 'totaltaxamt', 'tax'
+        ],
+        // Invoice / Bill No
+        invoice: [
+            'invoice', 'invoiceno', 'invoicenumber', 'voucherno', 'vouchernumber', 'transactionnumber',
+            'billno', 'billnumber', 'bill'
+        ],
+        billno: [
+            'billno', 'billnumber', 'bill', 'invoiceno', 'invoicenumber', 'invoice', 'voucherno',
+            'vouchernumber', 'transactionnumber'
+        ],
+        transactionnumber: [
+            'transactionnumber', 'billnumber', 'billno', 'invoicenumber', 'invoiceno', 'invoice', 'voucherno'
+        ],
+        // Dates
+        postingdate: [
+            'postingdate', 'invoicedate', 'billdate', 'date', 'voucherdate', 'transactiondate'
+        ],
+        transactiondate: [
+            'transactiondate', 'postingdate', 'invoicedate', 'billdate', 'date'
+        ],
+        // Order ID
+        orderid: [
+            'orderid', 'orderno', 'ordernumber', 'itemcforderno', 'pono', 'sono', 'purchaseorderno',
+            'salesorderno', 'order'
+        ],
+        itemcforderno: [
+            'itemcforderno', 'orderid', 'orderno', 'ordernumber', 'pono', 'order'
+        ],
+        // Quantity
+        stockqty: [
+            'stockqty', 'quantityordered', 'qty', 'quantity', 'billedqty', 'stockquantity', 'itemqty'
+        ],
+        quantityordered: [
+            'quantityordered', 'stockqty', 'qty', 'quantity', 'billedqty'
+        ],
+        // Rate / Price
+        rate: [
+            'rate', 'itemprice', 'bcyitemprice', 'amountwithouttax', 'price', 'unitprice', 'basicrate',
+            'basicprice'
+        ],
+        bcyitemprice: [
+            'bcyitemprice', 'amountwithouttax', 'rate', 'price', 'itemprice'
+        ],
+        amountwithouttax: [
+            'amountwithouttax', 'bcyitemprice', 'rate', 'price', 'taxableamount', 'taxablevalue'
+        ],
+        // Total
+        total: [
+            'total', 'bcytotalwithtax', 'bcytotal', 'grandtotal', 'invoicetotal', 'billtotal', 'nettotal',
+            'netamount', 'invoiceamount', 'totalamount'
+        ],
+        bcytotalwithtax: [
+            'bcytotalwithtax', 'bcytotal', 'total', 'grandtotal', 'totalamount'
+        ],
+        bcytotal: [
+            'bcytotal', 'bcytotalwithtax', 'total', 'grandtotal', 'totalamount'
+        ],
+        // Item Code / SKU
+        itemcode: [
+            'itemcode', 'sku', 'item', 'itemname', 'productcode', 'itemid', 'partno', 'partnumber'
+        ],
+        sku: [
+            'sku', 'itemcode', 'item', 'productcode', 'itemname'
+        ]
+    };
 
     // Build column mapping: maps targetColumns -> source file column index (-1 if missing)
     function buildColumnMapping(fileHeaders, targetColumns) {
         const mapping = [];
         const normHeaders = fileHeaders.map(h => normalizeColHeader(h));
         const exactHeaders = fileHeaders.map(h => String(h || '').trim().toLowerCase());
+        const usedIndices = new Set();
 
         targetColumns.forEach(target => {
             const targetExact = target.trim().toLowerCase();
             const targetNorm = normalizeColHeader(target);
+            let foundIdx = -1;
 
-            // 1. Try exact trimmed case-insensitive match
-            let foundIdx = exactHeaders.indexOf(targetExact);
-
-            // 2. Try normalized match (ignoring whitespace, dots, underscores, symbols)
-            if (foundIdx === -1) {
-                foundIdx = normHeaders.indexOf(targetNorm);
+            // 1. Try exact trimmed case-insensitive match (unused index first)
+            for (let i = 0; i < exactHeaders.length; i++) {
+                if (exactHeaders[i] === targetExact && !usedIndices.has(i)) {
+                    foundIdx = i;
+                    break;
+                }
             }
 
-            // 3. Fallback for common aliases (e.g., if looking for transaction_number, also accept bill_number or bill_no)
-            if (foundIdx === -1 && targetNorm === 'transactionnumber') {
-                foundIdx = normHeaders.indexOf('billnumber');
-                if (foundIdx === -1) foundIdx = normHeaders.indexOf('billno');
-                if (foundIdx === -1) foundIdx = normHeaders.indexOf('invoicenumber');
-                if (foundIdx === -1) foundIdx = normHeaders.indexOf('invoiceno');
+            // 2. Try normalized match (unused index first)
+            if (foundIdx === -1) {
+                for (let i = 0; i < normHeaders.length; i++) {
+                    if (normHeaders[i] === targetNorm && !usedIndices.has(i)) {
+                        foundIdx = i;
+                        break;
+                    }
+                }
+            }
+
+            // 3. Try alias list
+            if (foundIdx === -1 && COLUMN_ALIASES[targetNorm]) {
+                const aliases = COLUMN_ALIASES[targetNorm];
+                for (let a = 0; a < aliases.length; a++) {
+                    const aliasNorm = aliases[a];
+                    for (let i = 0; i < normHeaders.length; i++) {
+                        if (normHeaders[i] === aliasNorm && !usedIndices.has(i)) {
+                            foundIdx = i;
+                            break;
+                        }
+                    }
+                    if (foundIdx !== -1) break;
+                }
+            }
+
+            // 4. Keyword / Substring Fallback for Tax Columns (CGST, SGST, IGST)
+            if (foundIdx === -1) {
+                const isCgst = targetNorm.includes('cgst') || targetNorm.includes('centraltax');
+                const isSgst = targetNorm.includes('sgst') || targetNorm.includes('statetax') || targetNorm.includes('utgst');
+                const isIgst = targetNorm.includes('igst') || targetNorm.includes('integratedtax');
+                const isTotalTax = targetNorm === 'totaltax' || targetNorm === 'bcytaxamount';
+
+                for (let i = 0; i < normHeaders.length; i++) {
+                    if (usedIndices.has(i)) continue;
+                    const h = normHeaders[i];
+                    if (!h) continue;
+
+                    // Avoid matching rate or percentage columns
+                    if (h.includes('rate') || h.includes('perc') || h.includes('%')) continue;
+
+                    if (isCgst && (h.includes('cgst') || h.includes('centraltax'))) {
+                        foundIdx = i;
+                        break;
+                    } else if (isSgst && (h.includes('sgst') || h.includes('statetax') || h.includes('utgst'))) {
+                        foundIdx = i;
+                        break;
+                    } else if (isIgst && (h.includes('igst') || h.includes('integratedtax'))) {
+                        foundIdx = i;
+                        break;
+                    } else if (isTotalTax && (h.includes('totaltax') || (h.includes('tax') && h.includes('amount') && !h.includes('cgst') && !h.includes('sgst') && !h.includes('igst')))) {
+                        foundIdx = i;
+                        break;
+                    }
+                }
+            }
+
+            // 5. Intelligent Fallback for Order ID, Invoice/Bill, Item Code if still not found
+            if (foundIdx === -1) {
+                const isOrder = targetNorm.includes('order');
+                const isInv = targetNorm === 'invoice' || targetNorm === 'billno' || targetNorm === 'transactionnumber';
+                const isItem = targetNorm === 'itemcode' || targetNorm === 'sku';
+
+                for (let i = 0; i < normHeaders.length; i++) {
+                    if (usedIndices.has(i)) continue;
+                    const h = normHeaders[i];
+                    if (!h) continue;
+
+                    if (isOrder && (h.includes('orderno') || h.includes('orderid') || h.includes('order') || h.includes('sono') || h.includes('pono'))) {
+                        foundIdx = i;
+                        break;
+                    } else if (isInv && (h.includes('invoice') || h.includes('bill') || h.includes('voucher') || h.includes('trans'))) {
+                        foundIdx = i;
+                        break;
+                    } else if (isItem && (h.includes('sku') || h.includes('itemcode') || (h.includes('item') && !h.includes('price')))) {
+                        foundIdx = i;
+                        break;
+                    }
+                }
+            }
+
+            if (foundIdx !== -1) {
+                usedIndices.add(foundIdx);
             }
 
             mapping.push(foundIdx);
@@ -1119,6 +1327,7 @@
 
                 if (rows.length > 0) {
                     let fileDataStart = dataStartIndex;
+                    let fileHeaderRow = headerRowIndex;
 
                     // Account Center Mode Logic:
                     // First file starts from Row 2 (Header & Data); remaining files start from Row 3 onwards
@@ -1138,12 +1347,39 @@
                             // Extract data from Row 3 onwards for all remaining files
                             fileDataStart = 2; // Row 3 (0-based index 2)
                         }
+                        fileHeaderRow = headerRowIndex;
+                    } else if (state.mode === 'erp') {
+                        // Intelligent ERP Header Detection: Some ERP files have report titles in Row 0 and column headers in Row 1 or 2
+                        let bestRowIdx = 0;
+                        let bestScore = -1;
+                        for (let r = 0; r < Math.min(3, rows.length); r++) {
+                            const rowCells = rows[r] || [];
+                            const normRowCells = rowCells.map(c => normalizeColHeader(c));
+                            let score = 0;
+                            if (targetCols) {
+                                targetCols.forEach(tc => {
+                                    const normTc = normalizeColHeader(tc);
+                                    if (normRowCells.some(ch => ch === normTc || ch.includes(normTc) || normTc.includes(ch))) {
+                                        score += 3;
+                                    }
+                                });
+                            }
+                            const filled = rowCells.filter(c => c !== null && c !== undefined && String(c).trim() !== '').length;
+                            score += Math.min(filled, 10);
+
+                            if (score > bestScore) {
+                                bestScore = score;
+                                bestRowIdx = r;
+                            }
+                        }
+                        fileHeaderRow = bestRowIdx;
+                        fileDataStart = bestRowIdx + 1;
                     }
 
                     // Extract file headers
-                    const fileHeaders = (rows[headerRowIndex] || []).map(cell => String(cell || '').trim());
+                    const fileHeaders = (rows[fileHeaderRow] || []).map(cell => String(cell || '').trim());
 
-                    if (!targetCols && masterHeaders.length === 0 && rows.length > headerRowIndex) {
+                    if (!targetCols && masterHeaders.length === 0 && rows.length > fileHeaderRow) {
                         masterHeaders = fileHeaders;
                     }
 
@@ -1184,6 +1420,23 @@
                                                 }
                                             } else if (state.mode === 'zoho' && state.zohoPart === 'purchase' && rightStr !== '') {
                                                 val = rightVal;
+                                            }
+                                        }
+
+                                        // ERP Tax Column Data Fallback: If CGST or SGST column data is blank in a row,
+                                        // and the immediately adjacent right-side column (srcIdx + 1) is an unmapped column that contains data,
+                                        // capture the value from that adjacent column.
+                                        const isTaxCol = targetNorm.includes('cgst') || targetNorm.includes('sgst');
+                                        if (isTaxCol && srcIdx >= 0 && (srcIdx + 1) < row.length) {
+                                            const valStr = String(val).trim();
+                                            if (valStr === '' || valStr.toLowerCase() === 'null' || valStr.toLowerCase() === 'undefined' || valStr === '-') {
+                                                if (!colMapping.includes(srcIdx + 1)) {
+                                                    const rightVal = row[srcIdx + 1];
+                                                    const rightStr = (rightVal !== undefined && rightVal !== null) ? String(rightVal).trim() : '';
+                                                    if (rightStr !== '') {
+                                                        val = rightVal;
+                                                    }
+                                                }
                                             }
                                         }
 

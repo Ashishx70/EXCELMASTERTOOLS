@@ -40,16 +40,18 @@
       Default filename: `Merged_Zoho_Purchase_[timestamp].xlsx`.
       *(Zoho Purchase Auto-Shift: In Zoho Books Purchase exports, data for `item.CF.Order No` is automatically retrieved from its immediately adjacent right-side column and the extra column is eliminated).*
 - **Mode 3 - ERP Merge**:
-  - Treats Row 1 as Table Headers.
-  - Copies Data from Row 2 to the end of each sheet.
+  - Treats Row 1 as Table Headers (with auto-detection if Row 1 has report title and headers are on Row 2).
+  - Copies Data from Row 2 (or after detected headers) to the end of each sheet.
   - **Sub-Parts & Column Retention**:
     - **Normal**: Standard ERP exports. Copies all transactional data without deleting any columns. Default filename: `Merged_ERP_Normal_[timestamp].xlsx`.
     - **Sale**: ERP Sales Invoices. Automatically retains ONLY 11 specified columns and deletes all other columns:
       `Invoice`, `Posting Date`, `Order ID`, `Stock Qty`, `Rate`, `Total Tax`, `Output Tax CGST Amount`, `Output Tax SGST Amount`, `IGST Amount`, `Total`, `Item Code`.
       Default filename: `Merged_ERP_Sale_[timestamp].xlsx`.
+      *(Resilient Tax Matching: Supports all ERP variants such as `CGST Amount`, `Output CGST`, `CGST`, `Tax CGST`, `Central Tax`, etc., with adjacent column fallback).*
     - **Purchase**: ERP Purchase Bills. Automatically retains ONLY 11 specified columns and deletes all other columns:
       `Bill No`, `Posting Date`, `Order ID`, `Stock Qty`, `Rate`, `Input Tax CGST Amount`, `Input Tax SGST Amount`, `IGST Amount`, `Total Tax`, `Total`, `Item Code`.
       Default filename: `Merged_ERP_Purchase_[timestamp].xlsx`.
+      *(Resilient Tax Matching: Supports all ERP variants such as `CGST Amount`, `Input CGST`, `CGST`, `Tax CGST`, `Central Tax`, etc., with adjacent column fallback).*
 - **Mode 4 - Account Center Files**:
   - In the 1st file: extracts from Row 2 (Row 2 Header + Row 3+ Data).
   - In all subsequent files: extracts from Row 3 onwards (skipping Row 1 Title and Row 2 duplicate Header).
