@@ -405,11 +405,15 @@
 
     // Resilient Column Header Normalizer (lowercase & ignores whitespace, symbols, punctuation, and currency tags)
     function normalizeColHeader(str) {
-        return String(str || '')
-            .toLowerCase()
-            .replace(/[\s_\.\-\#\(\)\[\]\/\:\;\\\'\"₹,]+/g, '')
-            .replace(/(inr|rs)$/i, '')
-            .replace(/^itern/i, 'item');
+        let s = String(str || '').toLowerCase().trim();
+        // Strip parenthesized or delimited currency tags, e.g. " (INR)", " (Rs.)", "_INR", " (₹)"
+        // Do NOT strip bare trailing 'rs' like in 'particulars', 'orders', 'vouchers'
+        s = s.replace(new RegExp('\\s*[\\(\\[]\\s*(inr|rs|rs\\.|₹)\\s*[\\)\\]]', 'gi'), '');
+        s = s.replace(new RegExp('[\\s_\\-]+(inr|rs)$', 'gi'), '');
+        // Standardize 'itern' typo in Zoho files
+        s = s.replace(/^itern/gi, 'item');
+        // Strip symbols, whitespace, and punctuation
+        return s.replace(/[\s_\.\-\#\(\)\[\]\/\:\;\\\'\"₹,]+/g, '');
     }
 
     // Comprehensive column aliases for ERP & Zoho fields
@@ -419,7 +423,7 @@
             'outputtaxcgstamount', 'outputtaxcgst', 'outputcgstamount', 'outputcgstamt', 'outputcgst',
             'taxcgstamount', 'taxcgst', 'cgstamount', 'cgstamt', 'cgstvalue', 'cgsttaxamount', 'cgsttax',
             'cgstoutputamount', 'cgstoutput', 'centraltaxamount', 'centraltaxamt', 'centraltax',
-            'outputcentraltaxamount', 'outputcentraltax', 'cgst'
+            'outputcentraltaxamount', 'outputcentraltax', 'centralgstamount', 'centralgst', 'cgst'
         ],
         // ERP Sale SGST
         outputtaxsgstamount: [
@@ -427,14 +431,14 @@
             'taxsgstamount', 'taxsgst', 'sgstamount', 'sgstamt', 'sgstvalue', 'sgsttaxamount', 'sgsttax',
             'sgstoutputamount', 'sgstoutput', 'statetaxamount', 'statetaxamt', 'statetax',
             'outputstatetaxamount', 'outputstatetax', 'outputtaxutgstamount', 'outputtaxutgst',
-            'outpututgstamount', 'outpututgst', 'utgstamount', 'utgstamt', 'utgst', 'sgst'
+            'outpututgstamount', 'outpututgst', 'utgstamount', 'utgstamt', 'stategstamount', 'stategst', 'utgst', 'sgst'
         ],
         // ERP Purchase CGST
         inputtaxcgstamount: [
             'inputtaxcgstamount', 'inputtaxcgst', 'inputcgstamount', 'inputcgstamt', 'inputcgst',
             'taxcgstamount', 'taxcgst', 'cgstamount', 'cgstamt', 'cgstvalue', 'cgsttaxamount', 'cgsttax',
             'cgstinputamount', 'cgstinput', 'centraltaxamount', 'centraltaxamt', 'centraltax',
-            'inputcentraltaxamount', 'inputcentraltax', 'cgst'
+            'inputcentraltaxamount', 'inputcentraltax', 'centralgstamount', 'centralgst', 'cgst'
         ],
         // ERP Purchase SGST
         inputtaxsgstamount: [
@@ -442,102 +446,102 @@
             'taxsgstamount', 'taxsgst', 'sgstamount', 'sgstamt', 'sgstvalue', 'sgsttaxamount', 'sgsttax',
             'sgstinputamount', 'sgstinput', 'statetaxamount', 'statetaxamt', 'statetax',
             'inputstatetaxamount', 'inputstatetax', 'inputtaxutgstamount', 'inputtaxutgst',
-            'inpututgstamount', 'inpututgst', 'utgstamount', 'utgstamt', 'utgst', 'sgst'
+            'inpututgstamount', 'inpututgst', 'utgstamount', 'utgstamt', 'stategstamount', 'stategst', 'utgst', 'sgst'
         ],
         // IGST (Sale & Purchase)
         igstamount: [
             'igstamount', 'outputtaxigstamount', 'inputtaxigstamount', 'outputigstamount', 'inputigstamount',
             'outputtaxigst', 'inputtaxigst', 'outputigst', 'inputigst', 'taxigstamount', 'taxigst',
             'igstamt', 'igstvalue', 'igsttaxamount', 'igsttax', 'integratedtaxamount', 'integratedtaxamt',
-            'integratedtax', 'integratedgst', 'igst'
+            'integratedtax', 'integratedgstamount', 'integratedgst', 'igst'
         ],
         // Zoho CGST
         cgst: [
             'cgst', 'cgstamount', 'cgstamt', 'outputtaxcgstamount', 'outputtaxcgst', 'inputtaxcgstamount',
-            'inputtaxcgst', 'taxcgstamount', 'taxcgst', 'centraltaxamount', 'centraltax'
+            'inputtaxcgst', 'taxcgstamount', 'taxcgst', 'centraltaxamount', 'centraltax', 'centralgst'
         ],
         // Zoho SGST
         sgst: [
             'sgst', 'sgstamount', 'sgstamt', 'outputtaxsgstamount', 'outputtaxsgst', 'inputtaxsgstamount',
-            'inputtaxsgst', 'taxsgstamount', 'taxsgst', 'statetaxamount', 'statetax', 'utgstamount', 'utgst'
+            'inputtaxsgst', 'taxsgstamount', 'taxsgst', 'statetaxamount', 'statetax', 'utgstamount', 'utgst', 'stategst'
         ],
         // Zoho IGST
         igst: [
             'igst', 'igstamount', 'igstamt', 'outputtaxigstamount', 'inputtaxigstamount', 'taxigstamount',
-            'taxigst', 'integratedtaxamount', 'integratedtax'
+            'taxigst', 'integratedtaxamount', 'integratedtax', 'integratedgst'
         ],
         // Total Tax
         totaltax: [
             'totaltax', 'totaltaxamount', 'totaltaxamt', 'taxamount', 'taxamt', 'bcytaxamount',
-            'totaltaxes', 'gstamount', 'gstamt', 'tax'
+            'totaltaxes', 'gstamount', 'gstamt', 'totalgst', 'tax'
         ],
         bcytaxamount: [
-            'bcytaxamount', 'totaltax', 'totaltaxamount', 'taxamount', 'taxamt', 'totaltaxamt', 'tax'
+            'bcytaxamount', 'totaltax', 'totaltaxamount', 'taxamount', 'taxamt', 'totaltaxamt', 'gstamount', 'gstamt', 'totalgst', 'tax'
         ],
         // Invoice / Bill No
         invoice: [
-            'invoice', 'invoiceno', 'invoicenumber', 'voucherno', 'vouchernumber', 'transactionnumber',
-            'billno', 'billnumber', 'bill'
+            'invoice', 'invoiceno', 'invoicenumber', 'invno', 'inv', 'voucherno', 'vouchernumber', 'vchno', 'vch',
+            'docno', 'documentno', 'refno', 'referenceno', 'billno', 'billnumber', 'bill', 'transactionnumber', 'transno', 'billinvno'
         ],
         billno: [
-            'billno', 'billnumber', 'bill', 'invoiceno', 'invoicenumber', 'invoice', 'voucherno',
-            'vouchernumber', 'transactionnumber'
+            'billno', 'billnumber', 'bill', 'invoiceno', 'invoicenumber', 'invoice', 'invno', 'inv',
+            'voucherno', 'vouchernumber', 'vchno', 'vch', 'docno', 'documentno', 'refno', 'referenceno', 'transactionnumber', 'transno'
         ],
         transactionnumber: [
-            'transactionnumber', 'billnumber', 'billno', 'invoicenumber', 'invoiceno', 'invoice', 'voucherno'
+            'transactionnumber', 'transno', 'billnumber', 'billno', 'invoicenumber', 'invoiceno', 'invoice', 'bill', 'voucherno', 'vchno'
         ],
         // Dates
         postingdate: [
-            'postingdate', 'invoicedate', 'billdate', 'date', 'voucherdate', 'transactiondate'
+            'postingdate', 'invoicedate', 'invdate', 'billdate', 'date', 'voucherdate', 'vchdate', 'docdate', 'documentdate', 'transactiondate', 'transdate', 'txndate'
         ],
         transactiondate: [
-            'transactiondate', 'postingdate', 'invoicedate', 'billdate', 'date'
+            'transactiondate', 'transdate', 'postingdate', 'invoicedate', 'invdate', 'billdate', 'date', 'voucherdate', 'docdate'
         ],
         // Order ID (for ERP)
         orderid: [
-            'orderid', 'orderno', 'ordernumber', 'itemcforderno', 'pono', 'sono', 'purchaseorderno',
-            'salesorderno', 'order'
+            'orderid', 'orderno', 'ordernumber', 'itemcforderno', 'cforderno', 'cfordernumber', 'pono', 'purchaseorderno',
+            'sono', 'salesorderno', 'customerorderno', 'orderref', 'order'
         ],
         // Custom Field Order No (for Zoho Purchase & Sale: item.CF.Order No / itern.CF.Order No)
         itemcforderno: [
             'itemcforderno', 'iterncforderno', 'cforderno', 'cfordernumber',
-            'cforder', 'itemorderno', 'itemordernumber', 'iternorderno', 'iternordernumber'
+            'cforder', 'itemorderno', 'itemordernumber', 'iternorderno', 'iternordernumber', 'orderid', 'orderno', 'ordernumber'
         ],
         // Quantity
         stockqty: [
-            'stockqty', 'quantityordered', 'qty', 'quantity', 'billedqty', 'stockquantity', 'itemqty'
+            'stockqty', 'billedqty', 'actualqty', 'qty', 'quantity', 'quantityordered', 'stockquantity', 'itemqty', 'netqty', 'totalqty', 'nos', 'pcs', 'units'
         ],
         quantityordered: [
-            'quantityordered', 'stockqty', 'qty', 'quantity', 'billedqty'
+            'quantityordered', 'stockqty', 'billedqty', 'qty', 'quantity', 'itemqty', 'nos', 'pcs'
         ],
         // Rate / Price
         rate: [
             'rate', 'itemprice', 'bcyitemprice', 'amountwithouttax', 'price', 'unitprice', 'basicrate',
-            'basicprice'
+            'basicprice', 'basicamount', 'taxableamount', 'taxablevalue', 'taxableamt', 'taxable', 'assessablevalue', 'netrate', 'amount'
         ],
         bcyitemprice: [
-            'bcyitemprice', 'amountwithouttax', 'rate', 'price', 'itemprice'
+            'bcyitemprice', 'amountwithouttax', 'rate', 'price', 'itemprice', 'unitprice', 'taxableamount', 'taxablevalue'
         ],
         amountwithouttax: [
-            'amountwithouttax', 'bcyitemprice', 'rate', 'price', 'taxableamount', 'taxablevalue'
+            'amountwithouttax', 'bcyitemprice', 'rate', 'price', 'taxableamount', 'taxablevalue', 'taxableamt', 'basicamount', 'itemprice'
         ],
         // Total
         total: [
             'total', 'bcytotalwithtax', 'bcytotal', 'grandtotal', 'invoicetotal', 'billtotal', 'nettotal',
-            'netamount', 'invoiceamount', 'totalamount'
+            'netamount', 'invoiceamount', 'invoicevalue', 'billamount', 'billvalue', 'totalamount', 'totalvalue', 'grosstotal', 'finalamount'
         ],
         bcytotalwithtax: [
-            'bcytotalwithtax', 'bcytotal', 'total', 'grandtotal', 'totalamount'
+            'bcytotalwithtax', 'bcytotal', 'total', 'grandtotal', 'invoicetotal', 'totalamount', 'invoiceamount', 'invoicevalue', 'netamount'
         ],
         bcytotal: [
-            'bcytotal', 'bcytotalwithtax', 'total', 'grandtotal', 'totalamount'
+            'bcytotal', 'bcytotalwithtax', 'total', 'grandtotal', 'billtotal', 'totalamount', 'billamount', 'billvalue', 'netamount'
         ],
         // Item Code / SKU
         itemcode: [
-            'itemcode', 'sku', 'item', 'itemname', 'productcode', 'itemid', 'partno', 'partnumber'
+            'itemcode', 'sku', 'item', 'itemname', 'productcode', 'product', 'productname', 'particulars', 'description', 'itemdescription', 'productdescription', 'materialcode', 'itemid', 'partno', 'partnumber'
         ],
         sku: [
-            'sku', 'itemcode', 'item', 'productcode', 'itemname'
+            'sku', 'itemcode', 'item', 'productcode', 'itemname', 'product', 'particulars', 'description', 'itemdescription'
         ]
     };
 
@@ -617,12 +621,16 @@
                 }
             }
 
-            // 5. Intelligent Fallback for Custom Field Order No, Order ID, Invoice/Bill, Item Code if still not found
+            // 5. Intelligent Fallback for Custom Field Order No, Order ID, Invoice/Bill, Item Code, Dates, Qty, Rate, Total
             if (foundIdx === -1) {
                 const isCustomOrder = targetNorm.includes('cf') && targetNorm.includes('order');
                 const isOrder = targetNorm.includes('order') && !isCustomOrder;
                 const isInv = targetNorm === 'invoice' || targetNorm === 'billno' || targetNorm === 'transactionnumber';
                 const isItem = targetNorm === 'itemcode' || targetNorm === 'sku';
+                const isDate = targetNorm.includes('date');
+                const isQty = targetNorm === 'stockqty' || targetNorm === 'quantityordered';
+                const isRate = targetNorm === 'rate' || targetNorm === 'bcyitemprice' || targetNorm === 'amountwithouttax';
+                const isTotal = targetNorm === 'total' || targetNorm === 'bcytotalwithtax' || targetNorm === 'bcytotal';
 
                 // Prioritize Custom Field Order No: match ANY header containing BOTH 'cf' and 'order'
                 if (isCustomOrder) {
@@ -643,15 +651,49 @@
                         const h = normHeaders[i];
                         if (!h) continue;
 
-                        if (isOrder && (h.includes('orderno') || h.includes('orderid') || h.includes('order') || h.includes('sono') || h.includes('pono'))) {
-                            foundIdx = i;
-                            break;
-                        } else if (isInv && (h.includes('invoice') || h.includes('bill') || h.includes('voucher') || h.includes('trans'))) {
-                            foundIdx = i;
-                            break;
-                        } else if (isItem && (h.includes('sku') || h.includes('itemcode') || (h.includes('item') && !h.includes('price')))) {
-                            foundIdx = i;
-                            break;
+                        if (isInv) {
+                            // Crucial: avoid matching quantity columns (e.g. 'billedqty') or date columns
+                            if (h.includes('qty') || h.includes('quantity') || h.includes('date')) continue;
+                            if (h.includes('invoice') || h.includes('inv') || h.includes('bill') || h.includes('voucher') || h.includes('vch') || h.includes('docno') || h.includes('transno') || h.includes('refno')) {
+                                foundIdx = i;
+                                break;
+                            }
+                        } else if (isDate) {
+                            if (h.includes('update') || h.includes('due')) continue;
+                            if (h.includes('date') || h.includes('dt') || h.includes('posting') || h.includes('txn')) {
+                                foundIdx = i;
+                                break;
+                            }
+                        } else if (isOrder) {
+                            if (h.includes('date') || h.includes('qty') || h.includes('price') || h.includes('amount')) continue;
+                            if (h.includes('orderno') || h.includes('orderid') || h.includes('order') || h.includes('sono') || h.includes('pono') || h.includes('custref')) {
+                                foundIdx = i;
+                                break;
+                            }
+                        } else if (isQty) {
+                            if (h.includes('rate') || h.includes('price') || h.includes('amount')) continue;
+                            if (h.includes('qty') || h.includes('quantity') || h === 'nos' || h === 'pcs' || h === 'units') {
+                                foundIdx = i;
+                                break;
+                            }
+                        } else if (isRate) {
+                            if (h.includes('qty') || h.includes('tax') || h.includes('%') || h.includes('perc')) continue;
+                            if (h.includes('rate') || h.includes('price') || h.includes('taxable') || h.includes('assessable') || h.includes('basic')) {
+                                foundIdx = i;
+                                break;
+                            }
+                        } else if (isTotal) {
+                            if (h.includes('tax') || h.includes('qty')) continue;
+                            if (h.includes('total') || h.includes('gross') || h.includes('netamt') || h.includes('netamount') || h.includes('grand')) {
+                                foundIdx = i;
+                                break;
+                            }
+                        } else if (isItem) {
+                            if (h.includes('rate') || h.includes('price') || h.includes('amount') || h.includes('tax')) continue;
+                            if (h.includes('sku') || h.includes('itemcode') || (h.includes('item') && !h.includes('price')) || h.includes('product') || h.includes('particulars') || h.includes('description')) {
+                                foundIdx = i;
+                                break;
+                            }
                         }
                     }
                 }
@@ -1369,31 +1411,52 @@
                         fileHeaderRow = headerRowIndex;
                     } else if (state.mode === 'erp' || state.mode === 'zoho') {
                         // Intelligent Header Detection for ERP & Zoho:
-                        // Accurately finds the row containing actual column headers (Row 1, 2, or 3)
+                        // Scans up to 25 rows to accurately locate the real table header row.
+                        // Uses exact normalized matches and alias membership (prevents empty string fake scores).
                         let bestRowIdx = state.mode === 'zoho' ? 1 : 0;
-                        let bestScore = -1;
-                        for (let r = 0; r < Math.min(3, rows.length); r++) {
+                        let bestMatches = -1;
+                        const maxScan = Math.min(25, rows.length);
+
+                        for (let r = 0; r < maxScan; r++) {
                             const rowCells = rows[r] || [];
-                            const normRowCells = rowCells.map(c => normalizeColHeader(c));
-                            let score = 0;
+                            if (!rowCells || rowCells.length === 0) continue;
+                            const normCells = rowCells
+                                .map(c => normalizeColHeader(c))
+                                .filter(c => c !== '');
+                            if (normCells.length === 0) continue;
+
+                            let matches = 0;
                             if (targetCols) {
                                 targetCols.forEach(tc => {
                                     const normTc = normalizeColHeader(tc);
-                                    if (normRowCells.some(ch => ch === normTc || ch.includes(normTc) || normTc.includes(ch))) {
-                                        score += 3;
+                                    const aliases = COLUMN_ALIASES[normTc] || [normTc];
+                                    if (normCells.some(cell => cell === normTc || aliases.includes(cell))) {
+                                        matches++;
                                     }
                                 });
+                            } else {
+                                // Normal Mode: count distinct non-numeric string column headers
+                                const textCells = rowCells.filter(c => {
+                                    if (c === null || c === undefined) return false;
+                                    const s = String(c).trim();
+                                    return s.length > 0 && isNaN(Number(s));
+                                });
+                                matches = textCells.length;
                             }
-                            const filled = rowCells.filter(c => c !== null && c !== undefined && String(c).trim() !== '').length;
-                            score += Math.min(filled, 10);
 
-                            if (score > bestScore) {
-                                bestScore = score;
+                            if (matches > bestMatches) {
+                                bestMatches = matches;
                                 bestRowIdx = r;
                             }
                         }
-                        fileHeaderRow = bestRowIdx;
-                        fileDataStart = bestRowIdx + 1;
+
+                        // For filtered mode (Sale/Purchase), require at least 2 target column matches to override default.
+                        // For normal mode, require at least 3 distinct text headers to override default.
+                        const minThreshold = targetCols ? 2 : 3;
+                        if (bestMatches >= minThreshold) {
+                            fileHeaderRow = bestRowIdx;
+                            fileDataStart = bestRowIdx + 1;
+                        }
                     }
 
                     // Extract file headers
