@@ -1729,6 +1729,44 @@
                 candidates = ["invoice", "inv", "voucher_no", "bill_no"];
             }
         }
+        if (regType.includes("credit_note") || regType.includes("cn")) {
+            candidates = [
+                "credit note no", "credit note no.", "credit note number", "credit note #", "credit note",
+                "creditnote no", "creditnote number", "creditnote #", "credit_note_no", "credit_note_number", "creditnote_number",
+                "cn no", "cn number", "cn #", "cn_no", "cn_number",
+                "voucher no", "voucher no.", "voucherno", "voucher_no", "voucher",
+                "invoice no", "inv no", "bill no", "bill_no", "document no", "reference_number"
+            ];
+            if (regType.includes("zoho")) {
+                candidates = [
+                    "credit note #", "credit note no", "credit note no.", "credit note number", "credit note",
+                    "creditnote_number", "creditnote number", "credit_note_number", "creditnote no", "creditnote #",
+                    "credit_note_no", "cn_number", "cn no", "cn #",
+                    "voucher", "voucher no", "voucher_no", "reference_number", "bill no", "bill_no"
+                ];
+            }
+        }
+        if (regType.includes("debit_note") || regType.includes("dn")) {
+            candidates = [
+                "debit note no", "debit note no.", "debit note number", "debit note #", "debit note",
+                "debitnote no", "debitnote number", "debitnote #", "debit_note_no", "debit_note_number", "debitnote_number",
+                "dn no", "dn number", "dn #", "dn_no", "dn_number",
+                "vendor credit no", "vendor credit no.", "vendor credit number", "vendor credit #", "vendor credit",
+                "vendor_credit_no", "vendor_credit_number", "vendorcredit number",
+                "bill no", "bill_no", "bill no.", "bill number",
+                "voucher no", "voucher_no", "voucher no.", "voucherno", "voucher",
+                "invoice no", "inv no", "document no", "reference_number"
+            ];
+            if (regType.includes("zoho")) {
+                candidates = [
+                    "vendor credit #", "vendor credit no", "vendor credit no.", "vendor credit number", "vendor credit",
+                    "vendor_credit_number", "vendor credit number", "vendor_credit_no", "vendorcredit number",
+                    "debit note #", "debit note no", "debit note no.", "debit note number", "debit note",
+                    "debitnote_number", "debit_note_number", "dn_number", "dn no", "dn #", "debitnote #",
+                    "bill no", "bill_no", "bill number", "voucher no", "voucher_no", "voucher", "reference_number"
+                ];
+            }
+        }
 
         // Pass 1: exact lowercased match
         for (const cand of candidates) {
@@ -2140,24 +2178,38 @@
         }
 
         // Render Download Section (Multi-file ZIP + Individual Files)
-        if (elements.statsDownloadSection) {
-            // 1. Multi-file ZIP banner
-            if (cleanedFiles.length > 1 && zipBlob && elements.statsZipBox) {
-                if (elements.zipFileName) elements.zipFileName.textContent = zipFilename;
-                if (elements.zipFileDesc) {
-                    elements.zipFileDesc.textContent = `All ${cleanedFiles.length} cleaned registers bundled into one package • Total Retained: ${totalRetRows.toLocaleString()} rows • Peak RAM: ${maxPeakRam.toFixed(1)} MB`;
+        const statsDownloadSection = document.getElementById('stats-download-section');
+        const statsZipBox = document.getElementById('stats-zip-box');
+        const individualDownloadsWrap = document.getElementById('individual-downloads-wrap');
+        const cleanedFilesGrid = document.getElementById('cleaned-files-grid');
+        const purgedBanner = document.getElementById('stats-purged-banner');
+
+        if (purgedBanner) {
+            purgedBanner.style.display = 'none';
+        }
+
+        if (statsDownloadSection) {
+            // 1. Multi-file ZIP banner (Show when > 1 file)
+            if (cleanedFiles.length > 1 && zipBlob && statsZipBox) {
+                const zipFileName = document.getElementById('zip-file-name');
+                const zipFileDesc = document.getElementById('zip-file-desc');
+                const btnDownloadZipText = document.getElementById('btn-download-zip-text');
+                if (zipFileName) zipFileName.textContent = zipFilename;
+                if (zipFileDesc) {
+                    zipFileDesc.textContent = `All ${cleanedFiles.length} cleaned registers bundled into one package • Total Retained: ${totalRetRows.toLocaleString()} rows • Peak RAM: ${maxPeakRam.toFixed(1)} MB`;
                 }
-                if (elements.btnDownloadZipText) {
-                    elements.btnDownloadZipText.textContent = `Download All (${zipFilename})`;
+                if (btnDownloadZipText) {
+                    btnDownloadZipText.textContent = `Download All (${zipFilename})`;
                 }
-                elements.statsZipBox.style.display = 'flex';
-            } else if (elements.statsZipBox) {
-                elements.statsZipBox.style.display = 'none';
+                statsZipBox.style.display = 'flex';
+            } else if (statsZipBox) {
+                statsZipBox.style.display = 'none';
             }
 
             // 2. Individual Cleaned Files Grid
-            if (elements.cleanedFilesGrid) {
-                elements.cleanedFilesGrid.innerHTML = '';
+            if (individualDownloadsWrap) individualDownloadsWrap.style.display = 'block';
+            if (cleanedFilesGrid) {
+                cleanedFilesGrid.innerHTML = '';
                 
                 cleanedFiles.forEach((cf, idx) => {
                     const card = document.createElement('div');
@@ -2174,8 +2226,8 @@
                             </div>
                             <div class="cleaned-file-details">
                                 <div class="cleaned-file-title-row">
-                                    <span class="cleaned-file-title">${cf.name}</span>
-                                    <span class="cleaned-badge">${cf.slotName}</span>
+                                    <span class="cleaned-file-title">${escapeHtml(cf.name)}</span>
+                                    <span class="cleaned-badge">${escapeHtml(cf.slotName)}</span>
                                 </div>
                                 <div class="cleaned-file-meta">
                                     <span>Retained: <strong>${cf.stats.retRows.toLocaleString()}</strong> rows</span>
@@ -2203,11 +2255,11 @@
                         });
                     }
 
-                    elements.cleanedFilesGrid.appendChild(card);
+                    cleanedFilesGrid.appendChild(card);
                 });
             }
 
-            elements.statsDownloadSection.style.display = 'flex';
+            statsDownloadSection.style.display = 'flex';
         }
 
         if (elements.cleaningStatsCard) {
@@ -2267,22 +2319,24 @@
         // 3. Update counter badges in subtab nav
         updateSubtabCounters();
 
-        // 4. Update download UI to show memory purged (0 MB active RAM)
-        if (elements.statsDownloadSection) {
-            elements.statsDownloadSection.innerHTML = `
-                <div style="background: rgba(16, 185, 129, 0.08); border: 1.5px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.1rem 1.4rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; width: 100%;">
+        // 4. Update download UI without destroying the permanent DOM elements
+        const purgedBanner = document.getElementById('stats-purged-banner');
+        if (purgedBanner) {
+            purgedBanner.innerHTML = `
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1.5px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.1rem 1.4rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%;">
                     <div style="display: flex; align-items: center; gap: 0.85rem;">
                         <div style="width: 36px; height: 36px; border-radius: 50%; background: #d1fae5; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         </div>
                         <div>
                             <div style="font-weight: 700; color: #065f46; font-size: 0.95rem;">Download Complete & RAM Purged Clean</div>
-                            <div style="font-size: 0.82rem; color: #047857;">Cleaned batch data has been erased from memory. Browser & server are at 0 MB active load. Ready for Part 2!</div>
+                            <div style="font-size: 0.82rem; color: #047857;">Cleaned batch data has been erased from active memory. Ready for next cleaning batch!</div>
                         </div>
                     </div>
                     <span style="font-size: 0.8rem; font-weight: 700; background: #ecfdf5; color: #059669; padding: 0.4rem 0.85rem; border-radius: 999px; border: 1px solid rgba(16, 185, 129, 0.25); white-space: nowrap;">0 MB Active RAM</span>
                 </div>
             `;
+            purgedBanner.style.display = 'block';
         }
 
         // 5. Ping backend to trigger Python gc.collect()
@@ -2296,7 +2350,7 @@
         console.log('[LIFECYCLE PURGE] Cleaned batch slots and blobs purged from memory.');
     }
 
-    // Individual & ZIP Cleaned File Download Handlers with Auto-Purge Pipeline
+    // Individual & ZIP Cleaned File Download Handlers
     function downloadSingleCleanedFile(idx) {
         const item = cleanerState.cleanedFiles[idx];
         if (!item || !item.blob) {
@@ -2304,21 +2358,27 @@
             return;
         }
         const url = window.URL.createObjectURL(item.blob);
-        item.blobUrl = url;
         const a = document.createElement('a');
         a.href = url;
         a.download = item.name;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        setTimeout(() => window.URL.revokeObjectURL(url), 2000);
         showToast(`Downloading ${item.name}...`, 'success');
 
         item.downloaded = true;
-        const allDownloaded = cleanerState.cleanedFiles.every(cf => cf.downloaded);
-        if (allDownloaded || cleanerState.cleanedFiles.length === 1) {
-            setTimeout(() => {
-                purgeCleanedBatchMemory('Cleaned files downloaded! Batch memory & slots wiped clean.');
-            }, 1500);
+        // Visually mark button as downloaded
+        const btn = document.querySelector(`.btn-download-single[data-file-idx="${idx}"]`);
+        if (btn) {
+            btn.innerHTML = `
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Downloaded</span>
+            `;
+            btn.classList.remove('glass-btn-success');
+            btn.classList.add('glass-btn-secondary');
         }
     }
 
@@ -2328,19 +2388,20 @@
             return;
         }
         const url = window.URL.createObjectURL(cleanerState.zipBlob);
-        cleanerState.zipBlobUrl = url;
         const a = document.createElement('a');
         a.href = url;
         a.download = cleanerState.zipFilename || 'Cleaned_GST_Registers.zip';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        showToast(`Downloading ${cleanerState.zipFilename}... Memory purge scheduled!`, 'success');
+        setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+        showToast(`Downloading ${cleanerState.zipFilename}...`, 'success');
 
-        // After 1.5s (allowing browser download stream to initiate), wipe memory
-        setTimeout(() => {
-            purgeCleanedBatchMemory('Cleaned ZIP package downloaded! Batch memory & slots wiped clean.');
-        }, 1500);
+        const btnZip = document.getElementById('btn-download-zip');
+        if (btnZip) {
+            const btnText = document.getElementById('btn-download-zip-text');
+            if (btnText) btnText.textContent = `Downloaded (${cleanerState.zipFilename})`;
+        }
     }
 
     // High-performance streaming CSV export using chunked Blobs & RFC-4180

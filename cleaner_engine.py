@@ -118,24 +118,34 @@ CANDIDATE_ALIASES = {
         "invoice_number", "invoicenumber", "invoice_no", "invoice #"
     ],
     "credit_note_erp": [
+        "credit note no", "credit note no.", "credit note number", "credit note #", "credit note",
+        "creditnote no", "creditnote number", "creditnote #", "credit_note_no", "credit_note_number", "creditnote_number",
+        "cn no", "cn number", "cn #", "cn_no", "cn_number",
         "voucher no", "voucher_no", "voucher no.", "voucherno", "voucher",
         "invoice no", "invoice_no", "invoice number", "bill no", "bill_no", "bill number",
-        "creditnote_number", "credit_note_no", "cn_number", "credit note #", "document no", "reference_number"
+        "document no", "reference_number"
     ],
     "credit_note_zoho": [
-        "creditnote_number", "creditnote number", "credit_note_number",
-        "credit_note_no", "cn_number", "credit note #", "credit note no",
+        "credit note #", "credit note no", "credit note no.", "credit note number", "credit note",
+        "creditnote_number", "creditnote number", "credit_note_number", "creditnote no", "creditnote #",
+        "credit_note_no", "cn_number", "cn no", "cn #",
         "voucher", "voucher no", "voucher_no", "reference_number", "bill no", "bill_no"
     ],
     "debit_note_erp": [
+        "debit note no", "debit note no.", "debit note number", "debit note #", "debit note",
+        "debitnote no", "debitnote number", "debitnote #", "debit_note_no", "debit_note_number", "debitnote_number",
+        "dn no", "dn number", "dn #", "dn_no", "dn_number",
+        "vendor credit no", "vendor credit no.", "vendor credit number", "vendor credit #", "vendor credit",
+        "vendor_credit_no", "vendor_credit_number", "vendorcredit number",
         "bill no", "bill_no", "bill no.", "bill number",
         "voucher no", "voucher_no", "voucher no.", "voucherno", "voucher",
-        "invoice no", "invoice_no", "invoice number", "document no",
-        "vendor_credit_number", "debitnote_number", "dn_number", "debit note #", "reference_number"
+        "invoice no", "invoice_no", "invoice number", "document no", "reference_number"
     ],
     "debit_note_zoho": [
-        "vendor_credit_number", "vendor credit number", "vendor_credit_no",
-        "debitnote_number", "debit_note_number", "dn_number", "debit note #", "debit note no",
+        "vendor credit #", "vendor credit no", "vendor credit no.", "vendor credit number", "vendor credit",
+        "vendor_credit_number", "vendor credit number", "vendor_credit_no", "vendorcredit number",
+        "debit note #", "debit note no", "debit note no.", "debit note number", "debit note",
+        "debitnote_number", "debit_note_number", "dn_number", "dn no", "dn #", "debitnote #",
         "bill no", "bill_no", "bill number", "voucher no", "voucher_no", "voucher", "reference_number"
     ]
 }
