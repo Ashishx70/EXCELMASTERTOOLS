@@ -22,6 +22,7 @@ A static, browser-based application designed to merge multiple Excel (`.xlsx`, `
     - `transaction_number`, `transaction_date`, `item.CF.Order No`, `quantity_ordered`, `bcy_item_price`, `sgst`, `cgst`, `igst`, `bcy_tax_amount`, `bcy_total_with_tax`, `sku`
   - **Purchase**: Retains ONLY 10 columns and deletes all other columns (`Merged_Zoho_Purchase_[timestamp].xlsx`):
     - `transaction_number`, `transaction_date`, `item.CF.Order No`, `quantity_ordered`, `amount_without_tax`, `sgst`, `cgst`, `igst`, `bcy_total`, `sku`
+    - *(Auto-Shift: Automatically captures Order No from the adjacent right-side column if the primary column is blank in Zoho export).*
 - **Auto-Cleanup**: Filters out empty rows and temporary lock files.
 
 ### 3. ERP Merger

@@ -1165,7 +1165,28 @@
                                     // Filtered Mode: extract ONLY target columns in exact requested order
                                     for (let c = 0; c < colMapping.length; c++) {
                                         const srcIdx = colMapping[c];
-                                        const val = (srcIdx >= 0 && row[srcIdx] !== undefined && row[srcIdx] !== null) ? row[srcIdx] : '';
+                                        const targetColName = targetCols[c];
+                                        const targetNorm = normalizeColHeader(targetColName);
+
+                                        let val = (srcIdx >= 0 && row[srcIdx] !== undefined && row[srcIdx] !== null) ? row[srcIdx] : '';
+
+                                        // Zoho Purchase Bug Fix: 'item.CF.Order No' column is empty in Zoho export,
+                                        // but its actual data sits in the immediately adjacent right-side column (srcIdx + 1).
+                                        // We pull the data from the right column into 'item.CF.Order No', and drop the extra column.
+                                        if (targetNorm === 'itemcforderno' && srcIdx >= 0 && (srcIdx + 1) < row.length) {
+                                            const valStr = String(val).trim();
+                                            const rightVal = row[srcIdx + 1];
+                                            const rightStr = (rightVal !== undefined && rightVal !== null) ? String(rightVal).trim() : '';
+
+                                            if (valStr === '' || valStr.toLowerCase() === 'null' || valStr.toLowerCase() === 'undefined' || valStr === '-') {
+                                                if (rightStr !== '') {
+                                                    val = rightVal;
+                                                }
+                                            } else if (state.mode === 'zoho' && state.zohoPart === 'purchase' && rightStr !== '') {
+                                                val = rightVal;
+                                            }
+                                        }
+
                                         normalizedRow.push(val);
                                     }
                                 } else {
